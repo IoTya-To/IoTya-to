@@ -7,14 +7,17 @@
         :options="chartOptions"
         :series="series"
       />
+      <apex-empty-chart />
     </client-only>
   </v-container>
 </template>
 <script>
 
+import ApexEmptyChart from '../components/ApexEmptyChart'
 export default {
   inject: ['theme'],
   components: {
+    ApexEmptyChart,
     Apexcharts: () => import('vue-apexcharts')
   },
   data () {
@@ -48,7 +51,12 @@ export default {
           }
         },
         xaxis: {
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
+          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+          labels: {
+            style: {
+              colors: ['#00FF00']
+            }
+          }
         },
         tooltip: {
           theme: [
