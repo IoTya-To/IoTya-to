@@ -1,16 +1,22 @@
 <template>
   <v-container>
-    <ChartjsDemo />
+    <Apexcharts
+      type="line"
+      height="350"
+      :options="chartOptions"
+      :series="series"
+    />
+    <v-btn @click="func" />
   </v-container>
 </template>
-<script>
-const value = [10, 41, 35, 51, 49, 1, 333, 234, 23, 42, 62, 69, 91, 148]
 
+<script>
+const value = [{ x: new Date(), y: Math.random() * 100 }]
 export default {
-  inject: ['theme'],
   components: {
-    ChartjsDemo: () => import('../components/LineChart')
+    Apexcharts: () => import('vue-apexcharts')
   },
+  inject: ['theme'],
   data () {
     return {
       series: [{
@@ -23,6 +29,14 @@ export default {
           type: 'line',
           zoom: {
             enabled: true
+          },
+          animations: {
+            enabled: true,
+            easing: 'linear',
+            dynamicAnimation: {
+              enabled: true,
+              speed: 500
+            }
           }
         },
         dataLabels: {
@@ -42,6 +56,7 @@ export default {
           }
         },
         xaxis: {
+          type: 'numeric',
           range: 60,
           labels: {
             style: {
@@ -57,9 +72,17 @@ export default {
       }
     }
   },
+  mounted () {
+  },
   methods: {
     func () {
-      value.push(Math.random() * 100)
+      value.push([
+        {
+          x: new Date(),
+          y: Math.random() * 100
+        }
+      ]
+      )
       this.$refs.chart.updateSeries([{
         data: value
       }])

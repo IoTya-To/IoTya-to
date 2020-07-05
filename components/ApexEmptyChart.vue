@@ -1,13 +1,18 @@
 <template>
-  <Apexcharts
-    type="line"
-    height="350"
-    :options="chartOptions"
-    :series="[]"
-  />
+  <v-container>
+    <Apexcharts
+      type="line"
+      height="350"
+      :options="chartOptions"
+      :series="series"
+    />
+    <v-btn @click="addValue()">
+      push me!
+    </v-btn>
+  </v-container>
 </template>
-
 <script>
+const value = []
 export default {
   name: 'ApexEmptyChart',
   components: {
@@ -15,13 +20,16 @@ export default {
   },
   data () {
     return {
+      series: value,
       chartOptions: {
-        series: [],
+        series: value,
         title: {
           text: 'Sample'
         },
-        noData: {
-          text: 'Waiting for connection'
+        chart: {
+          noData: {
+            text: 'Waiting for connection'
+          }
         }
       }
     }
