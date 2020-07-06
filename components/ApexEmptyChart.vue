@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <Apexcharts
+    <apexchart
       type="line"
       height="350"
       :options="chartOptions"
@@ -12,11 +12,12 @@
   </v-container>
 </template>
 <script>
+import VueApexCharts from 'vue-apexcharts'
 const value = []
 export default {
   name: 'ApexEmptyChart',
   components: {
-    Apexcharts: () => import('vue-apexcharts')
+    apexchart: VueApexCharts
   },
   data () {
     return {
