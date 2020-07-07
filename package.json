@@ -13,12 +13,11 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.11.0",
-    "apexcharts": "^3.19.3",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.8.0",
+    "chartjs-plugin-streaming": "^1.8.0",
+    "moment": "^2.25.1",
     "nuxt": "^2.13.0",
-    "vue-apexcharts": "^1.5.3",
-    "vue-chartjs": "^3.5.0",
-    "vue-google-charts": "^0.3.3"
+    "vue-chartjs": "^3.5.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.0.0",
