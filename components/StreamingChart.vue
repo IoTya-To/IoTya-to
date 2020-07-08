@@ -23,10 +23,14 @@ export default {
         ]
       },
       {
+        responsive: true,
         scales: {
           xAxes: [
             {
               type: 'realtime',
+              time: {
+                unit: 'second'
+              },
               realtime: {
                 delay: 1000,
                 refresh: 1000,
