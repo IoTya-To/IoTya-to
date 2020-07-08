@@ -10,13 +10,14 @@ export default {
         datasets: [
           {
             label: 'Dataset 1',
+            fill: false,
             borderColor: 'rgb(255, 99, 132)',
             backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            lineTension: 0,
             borderDash: [8, 4]
           },
           {
             label: 'Dataset 2',
+            fill: false,
             borderColor: 'rgb(54, 162, 235)',
             backgroundColor: 'rgba(54, 162, 235, 0.5)'
           }
@@ -24,6 +25,7 @@ export default {
       },
       {
         responsive: true,
+        maintainAspectRatio: false,
         scales: {
           xAxes: [
             {
