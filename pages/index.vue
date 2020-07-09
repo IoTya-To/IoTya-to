@@ -2,7 +2,7 @@
   <v-layout column justify-center align-center>
     <v-flex xs12 sm2 md4 lg4 xl4>
       <v-row>
-        <v-col v-for="n in 5" :key="n" :cols="3">
+        <v-col v-for="n in 6" :key="n" :cols="4">
           <v-card>
             <v-card-title>
               {{n}}

@@ -12,8 +12,7 @@ export default {
             label: 'Dataset 1',
             fill: false,
             borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            borderDash: [8, 4]
+            backgroundColor: 'rgba(255, 99, 132, 0.5)'
           },
           {
             label: 'Dataset 2',
