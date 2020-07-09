@@ -5,7 +5,7 @@
         <v-col v-for="n in 6" :key="n" :cols="4">
           <v-card>
             <v-card-title>
-              {{n}}
+              {{ n }}
             </v-card-title>
             <div>
               <streaming-chart />
