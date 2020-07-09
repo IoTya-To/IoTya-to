@@ -1,6 +1,7 @@
 <script>
 import { Line } from 'vue-chartjs'
 import 'chartjs-plugin-streaming'
+import 'chartjs-plugin-zoom'
 
 export default {
   extends: Line,
@@ -46,6 +47,26 @@ export default {
               }
             }
           ]
+        },
+        pan: {
+          enabled: true,
+          mode: 'x',
+          rangeMax: {
+            x: 4000
+          },
+          rangeMin: {
+            x: 0
+          }
+        },
+        zoom: {
+          enabled: true,
+          mode: 'x',
+          rangeMax: {
+            x: 20000
+          },
+          rangeMin: {
+            x: 1000
+          }
         }
       }
     )
