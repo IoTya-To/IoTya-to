@@ -29,7 +29,8 @@ export default {
             {
               type: 'realtime',
               time: {
-                unit: 'second'
+                unit: 'second',
+                unitStepSize: 2
               },
               realtime: {
                 delay: 1000,
