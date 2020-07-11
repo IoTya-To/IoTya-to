@@ -57,7 +57,7 @@ export default {
         },
         xaxis: {
           type: 'numeric',
-          range: 60,
+          range: 600,
           labels: {
             style: {
               colors: ['#00FF00']

@@ -30,9 +30,10 @@ export default {
               type: 'realtime',
               time: {
                 unit: 'second',
-                unitStepSize: 2
+                unitStepSize: 5
               },
               realtime: {
+                duration: 20000,
                 delay: 1000,
                 refresh: 1000,
                 onRefresh (chart) {
