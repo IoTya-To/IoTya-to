@@ -19,7 +19,7 @@
                 </v-btn>
               </template>
               <v-list>
-                <v-list-item @click="alert">
+                <v-list-item @click="componentKey += 1">
                   <v-list-item-action-text>
                     <v-icon>
                       mdi-reload
@@ -42,7 +42,7 @@
       </v-layout>
     </v-row>
     <div>
-      <streaming-chart />
+      <streaming-chart :key="componentKey"/>
       <v-overlay
         absolute
         :value="overlay"
@@ -61,12 +61,8 @@ export default {
   props: ['cardName'],
   data () {
     return {
+      componentKey: 0,
       overlay: false
-    }
-  },
-  methods: {
-    alert () {
-      alert('click')
     }
   }
 }
