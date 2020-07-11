@@ -14,11 +14,33 @@
               <v-layout align-center>
                 <v-col class="px-2 py-0 mx-3 my-0">
                   <v-layout justify-end align-center>
-                    <v-btn class="px-2 py-0 mx-1 my-0" text icon>
-                      <v-icon>
-                        mdi-dots-vertical
-                      </v-icon>
-                    </v-btn>
+                    <v-menu offset-y>
+                      <template v-slot:activator="{on}">
+                        <v-btn class="px-2 py-0 mx-1 my-0" text icon v-on="on">
+                          <v-icon>
+                            mdi-dots-vertical
+                          </v-icon>
+                        </v-btn>
+                      </template>
+                      <v-list>
+                        <v-list-item @click="alert">
+                          <v-list-item-action-text>
+                            <v-icon>
+                              mdi-reload
+                            </v-icon>
+                            reload
+                          </v-list-item-action-text>
+                        </v-list-item>
+                        <v-list-item @click="alert">
+                          <v-list-item-action-text>
+                            <v-icon>
+                              mdi-cog
+                            </v-icon>
+                            Setting
+                          </v-list-item-action-text>
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
                   </v-layout>
                 </v-col>
               </v-layout>
@@ -33,5 +55,11 @@
   </v-layout>
 </template>
 <script>
-export default {}
+export default {
+  methods: {
+    alert () {
+      alert('click')
+    }
+  }
+}
 </script>
