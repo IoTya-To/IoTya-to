@@ -1,6 +1,6 @@
 <script>
 import { Line } from 'vue-chartjs'
-import 'chartjs-plugin-streaming'
+import '@taeuk-gang/chartjs-plugin-streaming'
 export default {
   extends: Line,
   mounted () {
