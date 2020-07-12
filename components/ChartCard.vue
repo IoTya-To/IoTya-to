@@ -42,14 +42,38 @@
       </v-layout>
     </v-row>
     <div>
-      <streaming-chart :key="componentKey"/>
+      <streaming-chart :key="componentKey" />
       <v-overlay
         absolute
         :value="overlay"
       >
-        <v-btn @click="overlay=false">
-          close
-        </v-btn>
+        <v-card>
+          <v-row>
+            <v-col>
+              <v-card-text>
+                chartID
+              </v-card-text>
+            </v-col>
+            <v-col>
+              <v-text-field :counter="10" class="pa-2 ma-0" value="Placeholder" />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-card-text>
+                chartName
+              </v-card-text>
+            </v-col>
+            <v-col>
+              <v-text-field :counter="10" class="pa-2 ma-0" :value="cardName"/>
+            </v-col>
+          </v-row>
+          <v-layout justify-center>
+            <v-btn class="ma-4" @click="overlay=false">
+              close
+            </v-btn>
+          </v-layout>
+        </v-card>
       </v-overlay>
     </div>
   </v-card>
