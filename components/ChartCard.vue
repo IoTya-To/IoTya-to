@@ -59,7 +59,17 @@
               <v-list-item>
                 <v-text-field
                   label="ChartTitle"
+                  max="10"
+                  min="1"
                   required
+                />
+              </v-list-item>
+              <v-list-item>
+                <v-text-field
+                  label="Number of charts"
+                  type="number"
+                  required
+                  :rules="[rules.chartNumMAX,rules.chartNumMIN]"
                 />
               </v-list-item>
               <v-list-item>
@@ -67,7 +77,7 @@
                   label="Color"
                   required
                 />
-                <v-btn color="#36a2eb" width="10" height="10"/>
+                <v-btn color="#36a2eb" width="10" height="10" />
               </v-list-item>
             </v-list>
           </v-col>
@@ -89,7 +99,11 @@ export default {
   data () {
     return {
       componentKey: 0,
-      overlay: false
+      overlay: false,
+      rules: {
+        chartNumMAX: value => parseInt(value) < 10 || 'Too much',
+        chartNumMIN: value => parseInt(value) > 0 || 'Too little'
+      }
     }
   }
 }
