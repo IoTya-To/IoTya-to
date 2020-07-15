@@ -10,14 +10,14 @@ export default {
           {
             label: 'Dataset 1',
             fill: false,
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(255, 99, 132, 0.5)'
+            borderColor: '#FF6384',
+            backgroundColor: '#FF6384'
           },
           {
             label: 'Dataset 2',
             fill: false,
-            borderColor: 'rgb(54, 162, 235)',
-            backgroundColor: 'rgba(54, 162, 235, 0.5)'
+            borderColor: '#36A2EB',
+            backgroundColor: '#36A2EB'
           }
         ]
       },
