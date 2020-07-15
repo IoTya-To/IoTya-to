@@ -48,26 +48,29 @@
         :value="overlay"
       >
         <v-card>
-          <v-row>
-            <v-col>
-              <v-card-text>
-                chartID
-              </v-card-text>
-            </v-col>
-            <v-col>
-              <v-text-field :counter="10" class="pa-2 ma-0" value="Placeholder" />
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <v-card-text>
-                chartName
-              </v-card-text>
-            </v-col>
-            <v-col>
-              <v-text-field :counter="10" class="pa-2 ma-0" :value="cardName"/>
-            </v-col>
-          </v-row>
+          <v-col class="px-16">
+            <v-list>
+              <v-list-item>
+                <v-text-field
+                  label="ChartID"
+                  required
+                />
+              </v-list-item>
+              <v-list-item>
+                <v-text-field
+                  label="ChartTitle"
+                  required
+                />
+              </v-list-item>
+              <v-list-item>
+                <v-text-field
+                  label="Color"
+                  required
+                />
+                <v-btn color="#36a2eb" width="10" height="10"/>
+              </v-list-item>
+            </v-list>
+          </v-col>
           <v-layout justify-center>
             <v-btn class="ma-4" @click="overlay=false">
               close
