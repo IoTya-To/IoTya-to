@@ -48,8 +48,8 @@
         :value="overlay"
       >
         <v-card>
-          <v-col class="px-16">
-            <v-list>
+          <v-col class="px-4">
+            <v-list max-height="350px" class="overflow-y-auto">
               <v-list-item>
                 <v-text-field
                   label="ChartID"
@@ -72,13 +72,7 @@
                   :rules="[rules.chartNumMAX,rules.chartNumMIN]"
                 />
               </v-list-item>
-              <v-list-item>
-                <v-text-field
-                  label="Color"
-                  required
-                />
-                <v-btn color="#36a2eb" width="10" height="10" />
-              </v-list-item>
+              <ColorPickOption v-for="n in 6" :key="n" :label="'chart'+n" />
             </v-list>
           </v-col>
           <v-layout justify-center>
@@ -93,8 +87,10 @@
 </template>
 
 <script>
+import ColorPickOption from './ColorPickOption'
 export default {
   name: 'ChartCard',
+  components: { ColorPickOption },
   props: ['cardName'],
   data () {
     return {
