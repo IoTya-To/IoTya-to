@@ -45,6 +45,7 @@
       <streaming-chart :key="componentKey" />
       <v-overlay
         absolute
+        z-index="0"
         :value="overlay"
       >
         <v-card>
