@@ -44,7 +44,13 @@
     </v-row>
     <div>
       <streaming-chart :key="componentKey" :data="chartList.datasets" />
-      <v-btn @click="addData(chartList.datasets)">aaa</v-btn>
+      <v-btn @click="addData(chartList.datasets)">
+        aaa
+      </v-btn>
+
+      <v-btn @click="log(chartList.datasets)">
+        bbbb
+      </v-btn>
       <v-overlay
         absolute
         z-index="0"
@@ -78,7 +84,9 @@
                   :rules="[rules.chartNumMAX,rules.chartNumMIN]"
                 />
               </v-list-item>
-              <ColorPickOption v-for="n in 6" :key="n" :label="'chart'+n" />
+              <v-list-item v-for="(dataset,index) in chartList.datasets" :key="index">
+                <chart-setting :chartdataset="dataset" :v-model="dataset" />
+              </v-list-item>
             </v-list>
           </v-col>
           <v-layout justify-center>
@@ -93,14 +101,13 @@
 </template>
 
 <script>
-import ColorPickOption from './ColorPickOption'
+import ChartSetting from './ChartSetting'
 export default {
   name: 'ChartCard',
-  components: { ColorPickOption },
+  components: { ChartSetting },
   props: ['chartList'],
   data () {
     return {
-      test: 'a',
       componentKey: 0,
       overlay: false,
       rules: {
@@ -110,6 +117,11 @@ export default {
     }
   },
   methods: {
+    log (obg) {
+      obg.forEach(function (value) {
+        console.log(value.backgroundColor)
+      })
+    },
     addData (data) {
       data.forEach((data) => {
         data.data.push({
