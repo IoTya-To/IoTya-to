@@ -44,6 +44,7 @@
     </v-row>
     <div>
       <streaming-chart :key="componentKey" :data="chartList.datasets" />
+      <v-btn @click="addData(chartList.datasets)">aaa</v-btn>
       <v-overlay
         absolute
         z-index="0"
@@ -106,6 +107,16 @@ export default {
         chartNumMAX: value => parseInt(value) < 10 || 'Too much',
         chartNumMIN: value => parseInt(value) > 0 || 'Too little'
       }
+    }
+  },
+  methods: {
+    addData (data) {
+      data.forEach((data) => {
+        data.data.push({
+          x: Date.now(),
+          y: Math.random()
+        })
+      })
     }
   }
 }

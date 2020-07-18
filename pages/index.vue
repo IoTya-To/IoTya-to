@@ -42,6 +42,12 @@ export default {
               fill: false,
               borderColor: '#36A2EB',
               backgroundColor: '#36A2EB'
+            },
+            {
+              label: 'Dataset 3',
+              fill: false,
+              borderColor: '#FFAA55',
+              backgroundColor: '#FFAA55'
             }
           ]
         },
