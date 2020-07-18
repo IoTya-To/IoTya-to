@@ -2,11 +2,12 @@
   <v-card>
     <v-row>
       <v-col>
-        <v-card-title class="px-2 py-0 mx-3 my-0">
-          {{ cardName }}
+        <v-card-title
+          class="px-2 py-0 mx-3 my-0"
+        >
+          {{ chartList.chartTitle }}
         </v-card-title>
       </v-col>
-      <v-spacer />
       <v-layout align-center>
         <v-col class="px-2 py-0 mx-3 my-0">
           <v-layout justify-end align-center>
@@ -42,7 +43,7 @@
       </v-layout>
     </v-row>
     <div>
-      <streaming-chart :key="componentKey" />
+      <streaming-chart :key="componentKey" :data="chartList.datasets" />
       <v-overlay
         absolute
         z-index="0"
@@ -54,12 +55,15 @@
               <v-list-item>
                 <v-text-field
                   label="ChartID"
+                  :value="chartList.id"
                   required
                 />
               </v-list-item>
               <v-list-item>
                 <v-text-field
+                  v-model="chartList.chartTitle"
                   label="ChartTitle"
+                  :value="chartList.chartTitle"
                   max="10"
                   min="1"
                   required
@@ -92,9 +96,10 @@ import ColorPickOption from './ColorPickOption'
 export default {
   name: 'ChartCard',
   components: { ColorPickOption },
-  props: ['cardName'],
+  props: ['chartList'],
   data () {
     return {
+      test: 'a',
       componentKey: 0,
       overlay: false,
       rules: {

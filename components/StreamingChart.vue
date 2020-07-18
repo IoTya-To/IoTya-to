@@ -3,23 +3,13 @@ import { Line } from 'vue-chartjs'
 import '@taeuk-gang/chartjs-plugin-streaming'
 export default {
   extends: Line,
+  props: {
+    data: Array
+  },
   mounted () {
     this.renderChart(
       {
-        datasets: [
-          {
-            label: 'Dataset 1',
-            fill: false,
-            borderColor: '#FF6384',
-            backgroundColor: '#FF6384'
-          },
-          {
-            label: 'Dataset 2',
-            fill: false,
-            borderColor: '#36A2EB',
-            backgroundColor: '#36A2EB'
-          }
-        ]
+        datasets: this.data
       },
       {
         responsive: true,

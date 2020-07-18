@@ -3,14 +3,14 @@
     <v-flex>
       <v-row>
         <v-col
-          v-for="n in charts"
+          v-for="(chart,n) in charts"
           :key="n"
           xs="12"
           sm="6"
           :md="getmd(charts)"
           :lg="getmd(charts)"
         >
-          <ChartCard :card-name="n.chartTitle" />
+          <ChartCard :chart-list="chart" :datasets="chart"/>
         </v-col>
         <v-col cols="12">
           <v-spacer />
@@ -29,19 +29,39 @@ export default {
       charts: [
         {
           id: 'temp',
-          chartTitle: 'Chart1',
-          chartType: 'Line',
-          cols: 1,
-          unit: '℃',
-          color: '#FF0000'
+          chartTitle: 'ChartHoge',
+          datasets: [
+            {
+              label: 'Dataset 1',
+              fill: false,
+              borderColor: '#FF6384',
+              backgroundColor: '#FF6384'
+            },
+            {
+              label: 'Dataset 2',
+              fill: false,
+              borderColor: '#36A2EB',
+              backgroundColor: '#36A2EB'
+            }
+          ]
         },
         {
-          id: 'clocks',
+          id: 'temp',
           chartTitle: 'Chart2',
-          chartType: 'Line',
-          cols: 1,
-          unit: 'Mhz',
-          color: '#FFFF00'
+          datasets: [
+            {
+              label: 'Dataset 1',
+              fill: false,
+              borderColor: '#FF6384',
+              backgroundColor: '#FF6384'
+            },
+            {
+              label: 'Dataset 2',
+              fill: false,
+              borderColor: '#36A2EB',
+              backgroundColor: '#36A2EB'
+            }
+          ]
         }
       ]
     }
