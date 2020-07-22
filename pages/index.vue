@@ -10,7 +10,10 @@
           :md="getmd(charts)"
           :lg="getmd(charts)"
         >
-          <ChartCard :chart-list="chart" :datasets="chart"/>
+          <ChartCard :v-model="chart" :chart-list="chart" />
+          <v-btn v-for="title in charts" :key="title">
+            {{ title.chartTitle }}
+          </v-btn>
         </v-col>
         <v-col cols="12">
           <v-spacer />
@@ -58,14 +61,14 @@ export default {
             {
               label: 'Dataset 1',
               fill: false,
-              borderColor: '#FF6384',
-              backgroundColor: '#FF6384'
+              borderColor: '#00FF84',
+              backgroundColor: '#00FF84'
             },
             {
               label: 'Dataset 2',
               fill: false,
-              borderColor: '#36A2EB',
-              backgroundColor: '#36A2EB'
+              borderColor: '#AA05FF',
+              backgroundColor: '#AA05FF'
             }
           ]
         }

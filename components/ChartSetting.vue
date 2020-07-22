@@ -2,15 +2,15 @@
   <v-list>
     <v-list-item>
       <v-text-field
-        :v-model="chartdataset.label"
+        :v-model="chartdataset_.label"
         label="ChartLabel"
-        :value="chartdataset.label"
+        :value="chartdataset_.label"
         max="10"
         min="1"
         required
       />
     </v-list-item>
-    <color-pick-option :chartdata="chartdataset"/>
+    <color-pick-option v-model="chartdataset_" :chartdata="chartdataset" />
   </v-list>
 </template>
 
@@ -19,7 +19,14 @@ import ColorPickOption from './ColorPickOption'
 export default {
   name: 'ChartSetting',
   components: { ColorPickOption },
-  props: ['chartdataset']
+  props: {
+    chartdataset: Object
+  },
+  data () {
+    return {
+      chartdataset_: this.chartdataset
+    }
+  }
 }
 </script>
 

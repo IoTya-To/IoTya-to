@@ -5,7 +5,7 @@
         <v-card-title
           class="px-2 py-0 mx-3 my-0"
         >
-          {{ chartList.chartTitle }}
+          {{ chartList_.chartTitle }}
         </v-card-title>
       </v-col>
       <v-layout align-center>
@@ -43,12 +43,11 @@
       </v-layout>
     </v-row>
     <div>
-      <streaming-chart :key="componentKey" :data="chartList.datasets" />
-      <v-btn @click="addData(chartList.datasets)">
+      <streaming-chart :key="componentKey" v-model="chartList_" :data="chartList_.datasets" />
+      <v-btn @click="addData(chartList_.datasets)">
         aaa
       </v-btn>
-
-      <v-btn @click="log(chartList.datasets)">
+      <v-btn @click="log(chartList_.datasets)">
         bbbb
       </v-btn>
       <v-overlay
@@ -62,15 +61,16 @@
               <v-list-item>
                 <v-text-field
                   label="ChartID"
-                  :value="chartList.id"
+                  :v-model="chartList_.id"
+                  :value="chartList_.id"
                   required
                 />
               </v-list-item>
               <v-list-item>
                 <v-text-field
-                  v-model="chartList.chartTitle"
+                  v-model="chartList_.chartTitle"
                   label="ChartTitle"
-                  :value="chartList.chartTitle"
+                  :value="chartList_.chartTitle"
                   max="10"
                   min="1"
                   required
@@ -84,7 +84,7 @@
                   :rules="[rules.chartNumMAX,rules.chartNumMIN]"
                 />
               </v-list-item>
-              <v-list-item v-for="(dataset,index) in chartList.datasets" :key="index">
+              <v-list-item v-for="(dataset,index) in chartList_.datasets" :key="index">
                 <chart-setting :chartdataset="dataset" :v-model="dataset" />
               </v-list-item>
             </v-list>
@@ -105,11 +105,12 @@ import ChartSetting from './ChartSetting'
 export default {
   name: 'ChartCard',
   components: { ChartSetting },
-  props: ['chartList'],
+  props: { chartList: Object },
   data () {
     return {
       componentKey: 0,
       overlay: false,
+      chartList_: this.chartList,
       rules: {
         chartNumMAX: value => parseInt(value) < 10 || 'Too much',
         chartNumMIN: value => parseInt(value) > 0 || 'Too little'
