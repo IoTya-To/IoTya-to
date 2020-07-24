@@ -64,6 +64,7 @@
                   :v-model="chartList_.id"
                   :value="chartList_.id"
                   required
+                  @input="$emit('input', chartList_)"
                 />
               </v-list-item>
               <v-list-item>
@@ -85,7 +86,7 @@
                 />
               </v-list-item>
               <v-list-item v-for="(dataset,index) in chartList_.datasets" :key="index">
-                <chart-setting :chartdataset="dataset" :v-model="dataset" />
+                <chart-setting v-model="chartList_.datasets[index]" :chartdataset="chartList_.datasets[index]" />
               </v-list-item>
             </v-list>
           </v-col>
@@ -105,7 +106,13 @@ import ChartSetting from './ChartSetting'
 export default {
   name: 'ChartCard',
   components: { ChartSetting },
-  props: { chartList: Object },
+  props: {
+    chartList: {
+      type: Object,
+      required: true,
+      default: null
+    }
+  },
   data () {
     return {
       componentKey: 0,
@@ -120,7 +127,7 @@ export default {
   methods: {
     log (obg) {
       obg.forEach(function (value) {
-        console.log(value.backgroundColor)
+        console.log(value)
       })
     },
     addData (data) {

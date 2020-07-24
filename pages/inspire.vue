@@ -6,6 +6,7 @@
         alt="Vuetify.js"
         class="mb-5"
       >
+      <test-pe />
       <blockquote class="blockquote">
         &#8220;First, solve the problem. Then, write the code.&#8221;
         <footer>
@@ -17,3 +18,9 @@
     </v-flex>
   </v-layout>
 </template>
+<script>
+import TestPe from '../components/testPe'
+export default {
+  components: { TestPe }
+}
+</script>

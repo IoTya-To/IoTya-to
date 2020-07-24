@@ -4,7 +4,11 @@ import '@taeuk-gang/chartjs-plugin-streaming'
 export default {
   extends: Line,
   props: {
-    data: Array
+    data: {
+      type: Array,
+      required: true,
+      default: null
+    }
   },
   mounted () {
     this.renderChart(

@@ -1,13 +1,21 @@
 <template>
   <v-list-item>
     <v-text-field
-      v-model="color"
+      v-model="chartdata_.borderColor"
       :rules="[rules.HEXColor]"
-      label="color"
-      :value="chartdata.borderColor"
-      required
+      label="LineColor"
+      :value="chartdata_.borderColor"
+      @input="$emit('input', chartdata_)"
     />
-    <v-btn :color="color" width="10" height="10" />
+    <v-btn :color="chartdata_.borderColor" width="10" height="10" />
+    <v-text-field
+      v-model="chartdata_.backgroundColor"
+      :rules="[rules.HEXColor]"
+      label="DotColor"
+      :value="chartdata_.backgroundColor"
+      @input="$emit('input', chartdata_)"
+    />
+    <v-btn :color="chartdata_.backgroundColor" width="10" height="10" />
   </v-list-item>
 </template>
 
@@ -16,11 +24,15 @@ const regExp = /^#([0-9]|[A-F]|[a-f]){6}$|^#([F0]|[f0]){3}$/
 export default {
   name: 'ColorPickOption',
   props: {
-    chartdata: Object
+    chartdata: {
+      type: Object,
+      required: true,
+      default: null
+    }
   },
   data () {
     return {
-      color: this.chartdata.borderColor,
+      chartdata_: this.chartdata,
       rules: {
         HEXColor: value => regExp.test(value) || 'not HEX ColorCode'
       }

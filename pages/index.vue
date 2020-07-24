@@ -10,13 +10,13 @@
           :md="getmd(charts)"
           :lg="getmd(charts)"
         >
-          <ChartCard :v-model="chart" :chart-list="chart" />
-          <v-btn v-for="title in charts" :key="title">
-            {{ title.chartTitle }}
-          </v-btn>
+          <ChartCard v-model="charts[n]" :chart-list="charts[n]" />
         </v-col>
         <v-col cols="12">
           <v-spacer />
+          <v-btn @click="sout">
+            sout
+          </v-btn>
         </v-col>
       </v-row>
     </v-flex>
@@ -82,6 +82,9 @@ export default {
       } else {
         return 3
       }
+    },
+    sout () {
+      console.log(this.charts)
     }
   }
 }

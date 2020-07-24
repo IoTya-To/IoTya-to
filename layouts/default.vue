@@ -30,13 +30,14 @@
       fixed
       app
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" >
-        <v-icon color="#FFF">mdi-menu</v-icon>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer">
+        <v-icon color="#FFF">
+          mdi-menu
+        </v-icon>
       </v-app-bar-nav-icon>
 
-      <v-toolbar-title v-text="title" class="white--text"/>
+      <v-toolbar-title class="white--text" v-text="title" />
       <v-spacer />
-
     </v-app-bar>
     <v-main>
       <v-container>
