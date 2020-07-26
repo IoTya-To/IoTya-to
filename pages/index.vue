@@ -1,7 +1,7 @@
 <template>
   <v-layout column justify-center align-center>
     <v-container fluid>
-      <Draggable v-model="charts" tag="v-row" ：sort=" true " @change="refresh" >
+      <Draggable :key="componentKey" v-model="charts" tag="v-row" ：sort=" true " @change="refresh" >
         <v-col
           v-for="(chart,n) in charts"
           :key="n"
@@ -10,7 +10,7 @@
           :md="getmd(charts)"
           :lg="getmd(charts)"
         >
-          <ChartCard :key="componentKey" v-model="charts[n]" :chart-list="charts[n]" />
+          <ChartCard v-model="charts[n]" :chart-list="charts[n]" />
         </v-col>
       </Draggable>
       <v-row>
@@ -73,6 +73,24 @@ export default {
               fill: false,
               borderColor: '#AA05FF',
               backgroundColor: '#AA05FF'
+            }
+          ]
+        },
+        {
+          id: 'temp',
+          chartTitle: 'Chart3',
+          datasets: [
+            {
+              label: 'Dataset 1',
+              fill: false,
+              borderColor: '#FFFF84',
+              backgroundColor: '#FFFF84'
+            },
+            {
+              label: 'Dataset 2',
+              fill: false,
+              borderColor: '#AADDFF',
+              backgroundColor: '#AADD FF'
             }
           ]
         }
