@@ -1,21 +1,26 @@
 <template>
-  <v-layout column justify-center align-center>
+  <v-layout :key="componentKey" column justify-center align-center>
     <v-flex>
       <v-row>
-        <v-col
-          v-for="(chart,n) in charts"
-          :key="n"
-          xs="12"
-          sm="6"
-          :md="getmd(charts)"
-          :lg="getmd(charts)"
-        >
-          <ChartCard v-model="charts[n]" :chart-list="charts[n]" />
-        </v-col>
+        <Draggable v-model="charts" tag="v-layout" ：sort=" true ">
+          <v-col
+            v-for="(chart,n) in charts"
+            :key="n"
+            xs="12"
+            sm="6"
+            :md="getmd(charts)"
+            :lg="getmd(charts)"
+          >
+            <ChartCard v-model="charts[n]" :chart-list="charts[n]" />
+          </v-col>
+        </Draggable>
         <v-col cols="12">
           <v-spacer />
           <v-btn @click="sout">
-            sout
+            log
+          </v-btn>
+          <v-btn @click="refresh">
+            re
           </v-btn>
         </v-col>
       </v-row>
@@ -23,11 +28,13 @@
   </v-layout>
 </template>
 <script>
+import Draggable from 'vuedraggable'
 import ChartCard from '../components/ChartCard'
 export default {
-  components: { ChartCard },
+  components: { ChartCard, Draggable },
   data () {
     return {
+      componentKey: 0,
       baseGridSize: 4,
       charts: [
         {
@@ -85,6 +92,9 @@ export default {
     },
     sout () {
       console.log(this.charts)
+    },
+    refresh () {
+      this.componentKey += 1
     }
   }
 }
