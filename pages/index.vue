@@ -1,7 +1,7 @@
 <template>
   <v-layout column justify-center align-center>
     <v-container fluid>
-      <Draggable :key="componentKey" v-model="charts" tag="v-row" ：sort=" true " @change="refresh" >
+      <v-row :key="componentKey">
         <v-col
           v-for="(chart,n) in charts"
           :key="n"
@@ -12,7 +12,7 @@
         >
           <ChartCard v-model="charts[n]" :chart-list="charts[n]" />
         </v-col>
-      </Draggable>
+      </v-row>
       <v-row>
         <v-btn @click="sout">
           log
@@ -25,10 +25,10 @@
   </v-layout>
 </template>
 <script>
-import Draggable from 'vuedraggable'
+// import Draggable from 'vuedraggable'
 import ChartCard from '../components/ChartCard'
 export default {
-  components: { ChartCard, Draggable },
+  components: { ChartCard },
   data () {
     return {
       componentKey: 0,
