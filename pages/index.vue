@@ -1,30 +1,27 @@
 <template>
-  <v-layout :key="componentKey" column justify-center align-center>
-    <v-flex>
-      <v-row>
-        <Draggable v-model="charts" tag="v-layout" ：sort=" true ">
-          <v-col
-            v-for="(chart,n) in charts"
-            :key="n"
-            xs="12"
-            sm="6"
-            :md="getmd(charts)"
-            :lg="getmd(charts)"
-          >
-            <ChartCard v-model="charts[n]" :chart-list="charts[n]" />
-          </v-col>
-        </Draggable>
-        <v-col cols="12">
-          <v-spacer />
-          <v-btn @click="sout">
-            log
-          </v-btn>
-          <v-btn @click="refresh">
-            re
-          </v-btn>
+  <v-layout column justify-center align-center>
+    <v-container fluid>
+      <Draggable v-model="charts" tag="v-row" ：sort=" true " @change="refresh" >
+        <v-col
+          v-for="(chart,n) in charts"
+          :key="n"
+          xs="12"
+          sm="6"
+          :md="getmd(charts)"
+          :lg="getmd(charts)"
+        >
+          <ChartCard :key="componentKey" v-model="charts[n]" :chart-list="charts[n]" />
         </v-col>
+      </Draggable>
+      <v-row>
+        <v-btn @click="sout">
+          log
+        </v-btn>
+        <v-btn @click="refresh">
+          re
+        </v-btn>
       </v-row>
-    </v-flex>
+    </v-container>
   </v-layout>
 </template>
 <script>
