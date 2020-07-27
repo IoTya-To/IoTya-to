@@ -55,7 +55,7 @@
         z-index="0"
         :value="overlay"
       >
-        <v-card>
+        <v-card :light="!$vuetify.theme.dark">
           <v-col class="px-4">
             <v-list max-height="350px" class="overflow-y-auto">
               <v-list-item>
