@@ -4,7 +4,9 @@
       <v-card-title>Settings Page</v-card-title>
       <v-list>
         <v-list-item>
-          <v-list-item-title class="pr-16">DarkTheme</v-list-item-title>
+          <v-list-item-title class="pr-16">
+            DarkTheme
+          </v-list-item-title>
           <v-list-item-action>
             <v-switch
               v-model="$vuetify.theme.dark"
@@ -12,6 +14,14 @@
               inset
               color="#ffffff"
             />
+          </v-list-item-action>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-title>
+            SecretKey
+          </v-list-item-title>
+          <v-list-item-action>
+            <v-text-field label="SecretKey" />
           </v-list-item-action>
         </v-list-item>
       </v-list>

@@ -75,6 +75,11 @@ export default {
           icon: 'mdi-cog',
           title: 'settings',
           to: '/settings'
+        },
+        {
+          icon: 'mdi-lan-connect',
+          title: 'WebsocketTest',
+          to: '/WebsocketTestPage'
         }
       ],
       miniVariant: false,

@@ -92,7 +92,9 @@ export default {
   build: {
     extend (config, { isDev, isClient }) {
       config.node = {
-        chartjs: 'empty'
+        chartjs: 'empty',
+        fs: 'empty',
+        net: 'empty'
       }
     }
   }
