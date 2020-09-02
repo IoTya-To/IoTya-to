@@ -130,12 +130,12 @@ export default {
         })
       })
     },
-    addData () {
-      // あとでいい感じにする
-      const chart = this.charts.find((chart) => { return chart.id === 'chart1' })
-      chart.datasets.find((dataset) => { return dataset.label === 'Dataset 1' }).data.push({
+    addData (chartid, label, data) {
+      const chart = this.charts.find((chart) => { return chart.id === chartid })
+      const target = chart.datasets.find((dataset) => { return dataset.label === label }).data
+      target.push({
         x: Date.now(),
-        y: 0
+        y: data
       })
     }
   }
