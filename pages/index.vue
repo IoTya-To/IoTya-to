@@ -1,7 +1,7 @@
 <template>
   <v-layout column justify-center align-center>
     <v-container fluid>
-      <Draggable :key="componentKey" v-model="charts" tag="v-row" ：sort=" true " @change="refresh">
+      <v-row>
         <v-col
           v-for="(chart,n) in charts"
           :key="n"
@@ -12,7 +12,7 @@
         >
           <ChartCard v-model="charts[n]" :chart-list="charts[n]" />
         </v-col>
-      </Draggable>
+      </v-row>
       <v-row>
         <v-btn @click="sout">
           log
@@ -20,22 +20,28 @@
         <v-btn @click="refresh">
           re
         </v-btn>
+        <v-btn @click="test">
+          test
+        </v-btn>
+        <v-btn @click="addData">
+          addData
+        </v-btn>
       </v-row>
     </v-container>
   </v-layout>
 </template>
 <script>
-import Draggable from 'vuedraggable'
+// import Draggable from 'vuedraggable'
 import ChartCard from '../components/ChartCard'
 export default {
-  components: { ChartCard, Draggable },
+  components: { ChartCard },
   data () {
     return {
       componentKey: 0,
       baseGridSize: 4,
       charts: [
         {
-          id: 'temp',
+          id: 'chart1',
           chartTitle: 'ChartHoge',
           datasets: [
             {
@@ -110,6 +116,27 @@ export default {
     },
     refresh () {
       this.componentKey += 1
+    },
+    test () {
+      this.charts.forEach((chart) => {
+        chart.datasets.filter()
+      })
+      this.charts.forEach((chart) => {
+        chart.datasets.forEach((dataset) => {
+          dataset.data.push({
+            x: Date.now(),
+            y: 0
+          })
+        })
+      })
+    },
+    addData () {
+      // あとでいい感じにする
+      const chart = this.charts.find((chart) => { return chart.id === 'chart1' })
+      chart.datasets.find((dataset) => { return dataset.label === 'Dataset 1' }).data.push({
+        x: Date.now(),
+        y: 0
+      })
     }
   }
 }
