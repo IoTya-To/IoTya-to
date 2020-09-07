@@ -23,7 +23,7 @@
         <v-btn @click="test">
           test
         </v-btn>
-        <v-btn @click="addData">
+        <v-btn @click="addData('chart1','Dataset 1',0)">
           addData
         </v-btn>
       </v-row>
@@ -100,6 +100,18 @@ export default {
             }
           ]
         }
+      ],
+      receiveData: [
+        {
+          id: 'chart1',
+          datasets: [
+            {
+              label: 'Dataset 1',
+              time: '',
+              value: 12
+            }
+          ]
+        }
       ]
     }
   },
@@ -117,26 +129,23 @@ export default {
     refresh () {
       this.componentKey += 1
     },
-    test () {
-      this.charts.forEach((chart) => {
-        chart.datasets.filter()
-      })
-      this.charts.forEach((chart) => {
-        chart.datasets.forEach((dataset) => {
-          dataset.data.push({
-            x: Date.now(),
-            y: 0
+    addData () {
+      this.receiveData.forEach((data) => {
+        const chart = this.findChart(data.id)
+        data.datasets.forEach((dataset) => {
+          const data = this.findData(chart, dataset.label)
+          data.push({
+            x: dataset.time,
+            y: dataset.value
           })
         })
       })
     },
-    addData (chartid, label, data) {
-      const chart = this.charts.find((chart) => { return chart.id === chartid })
-      const target = chart.datasets.find((dataset) => { return dataset.label === label }).data
-      target.push({
-        x: Date.now(),
-        y: data
-      })
+    findChart (chartid) {
+      return this.charts.find((chart) => { return chart.id === chartid })
+    },
+    findData (chart, label) {
+      return chart.datasets.find((dataset) => { return dataset.label === label }).data
     }
   }
 }
