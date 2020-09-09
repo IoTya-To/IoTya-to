@@ -20,7 +20,7 @@
         <v-btn @click="refresh">
           re
         </v-btn>
-        <v-btn @click="test">
+        <v-btn>
           test
         </v-btn>
         <v-btn @click="addData('chart1','Dataset 1',0)">
@@ -33,10 +33,12 @@
 <script>
 // import Draggable from 'vuedraggable'
 import ChartCard from '../components/ChartCard'
+const io = require('socket.io-client')
 export default {
   components: { ChartCard },
   data () {
     return {
+      serverAddress: 'https://localhost:8080',
       componentKey: 0,
       baseGridSize: 4,
       charts: [
@@ -100,20 +102,24 @@ export default {
             }
           ]
         }
-      ],
-      receiveData: [
-        {
-          id: 'chart1',
-          datasets: [
-            {
-              label: 'Dataset 1',
-              time: '',
-              value: 12
-            }
-          ]
-        }
       ]
     }
+  },
+  mounted () {
+    const socket = io('http://localhost:8080', {
+      reconnection: true,
+      reconnectionAttempts: 10,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 5000,
+      randomizationFactor: 0.5
+    })
+    socket.on('connect', () => {
+      console.log(`socket.connected: ${socket.connected}`)
+      socket.on('ServerMessage', (message) => {
+        console.log(message)
+        this.addData(message)
+      })
+    })
   },
   methods: {
     getmd (item) {
@@ -129,13 +135,15 @@ export default {
     refresh () {
       this.componentKey += 1
     },
-    addData () {
-      this.receiveData.forEach((data) => {
+    addData (receiveData) {
+      console.log('methio')
+      receiveData.data.forEach((data) => {
         const chart = this.findChart(data.id)
         data.datasets.forEach((dataset) => {
+          console.log(dataset)
           const data = this.findData(chart, dataset.label)
           data.push({
-            x: dataset.time,
+            x: Date.now(), // dataset.time,
             y: dataset.value
           })
         })
@@ -145,6 +153,7 @@ export default {
       return this.charts.find((chart) => { return chart.id === chartid })
     },
     findData (chart, label) {
+      console.log(chart)
       return chart.datasets.find((dataset) => { return dataset.label === label }).data
     }
   }
