@@ -1,6 +1,9 @@
 <template>
   <v-container>
-    <v-card>
+    <v-card :light="!$vuetify.theme.dark">
+      <v-card-title>
+        Login
+      </v-card-title>
       <v-col class="pa-6">
         <v-row>
           <v-col>
