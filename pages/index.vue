@@ -1,6 +1,27 @@
 <template>
   <v-layout column justify-center align-center>
     <v-container fluid>
+      <v-btn @click="loginOverlay=true">
+        show
+      </v-btn>
+      <v-overlay
+        :absolute="true"
+        :opacity="0.85"
+        :value="loginOverlay"
+        :z-index="5"
+      >
+        <v-layout justify-center>
+          <login-form />
+        </v-layout>
+        <v-layout justify-center>
+          <v-btn
+            color="primary"
+            @click="loginOverlay = false"
+          >
+            Hide Overlay
+          </v-btn>
+        </v-layout>
+      </v-overlay>
       <v-row>
         <v-col
           v-for="(chart,n) in charts"
@@ -33,14 +54,16 @@
 <script>
 // import Draggable from 'vuedraggable'
 import ChartCard from '../components/ChartCard'
+import LoginForm from '../components/LoginForm'
 const io = require('socket.io-client')
 export default {
-  components: { ChartCard },
+  components: { LoginForm, ChartCard },
   data () {
     return {
       serverAddress: 'https://localhost:8080',
       componentKey: 0,
       baseGridSize: 4,
+      loginOverlay: false,
       charts: [
         {
           id: 'chart1',
