@@ -44,12 +44,6 @@
     </v-row>
     <div>
       <streaming-chart :key="componentKey" v-model="chartList_" :data="chartList_.datasets" />
-      <v-btn @click="addData(chartList_.datasets)">
-        aaa
-      </v-btn>
-      <v-btn @click="log(chartList_.datasets)">
-        bbbb
-      </v-btn>
       <v-overlay
         absolute
         z-index="0"
