@@ -10,7 +10,7 @@
             <v-text-field
               v-model="Mail"
               label="e-mail"
-              :rules="emailrules"
+              :rules="rules.eMailRules"
             />
           </v-col>
         </v-row>
@@ -46,8 +46,10 @@ export default {
       show: false,
       Mail: '',
       Password: '',
-      eMailRegix: /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+$/,
-      emailrules: [input => !!input || 'E-mail is required', input => this.eMailRegix.test(input) || 'it is not the correct email address.']
+      rules: {
+        eMailRegix: /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+$/,
+        eMailRules: [input => !!input || 'E-mail is required', input => this.rules.eMailRegix.test(input) || 'it is not the correct email address.']
+      }
     }
   }
 }
