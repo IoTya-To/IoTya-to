@@ -8,15 +8,16 @@
         <v-row>
           <v-col>
             <v-text-field
-              v-model=Mail
+              v-model="Mail"
               label="e-mail"
+              :rules="emailrules"
             />
           </v-col>
         </v-row>
         <v-row>
           <v-col>
             <v-text-field
-              v-model=Password
+              v-model="Password"
               :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
               :type="show ? 'text' : 'password'"
               label="password"
@@ -36,13 +37,17 @@
   </v-container>
 </template>
 <script>
+
 export default {
+  // todo add inpur rule
   name: 'LoginForm',
   data () {
     return {
       show: false,
       Mail: '',
-      Password: ''
+      Password: '',
+      eMailRegix: /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+$/,
+      emailrules: [input => !!input || 'E-mail is required', input => this.eMailRegix.test(input) || 'it is not the correct email address.']
     }
   }
 }
