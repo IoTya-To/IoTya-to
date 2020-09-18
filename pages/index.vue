@@ -55,6 +55,12 @@
 // import Draggable from 'vuedraggable'
 import ChartCard from '../components/ChartCard'
 import LoginForm from '../components/LoginForm'
+import firebaseConfig from '../components/firebaseConfig'
+const firebase = require('firebase/app')
+require('firebase/auth')
+// todo fix config file
+firebase.initializeApp(firebaseConfig.config)
+
 const io = require('socket.io-client')
 export default {
   components: { LoginForm, ChartCard },
@@ -129,6 +135,13 @@ export default {
     }
   },
   mounted () {
+    // auth test
+    // emal,password
+    firebase.auth().signInWithEmailAndPassword().then((UserCredential) => {
+      console.log(UserCredential)
+    }).catch((err) => {
+      console.log(err.message)
+    })
     const socket = io('http://localhost:8080', {
       reconnection: true,
       reconnectionAttempts: 10,
