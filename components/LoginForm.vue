@@ -8,7 +8,7 @@
         <v-row>
           <v-col>
             <v-text-field
-              v-model="Mail"
+              v-model="eMail"
               label="e-mail"
               :rules="rules.eMailRules"
             />
@@ -17,7 +17,7 @@
         <v-row>
           <v-col>
             <v-text-field
-              v-model="Password"
+              v-model="password"
               :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
               :type="show ? 'text' : 'password'"
               label="password"
@@ -27,7 +27,7 @@
         </v-row>
         <v-row>
           <v-layout justify-center>
-            <v-btn>
+            <v-btn @click="login()">
               Login
             </v-btn>
           </v-layout>
@@ -37,19 +37,31 @@
   </v-container>
 </template>
 <script>
-
+import config from '../components/firebaseConfig'
+const firebase = require('firebase/app')
+require('firebase/auth')
 export default {
-  // todo add inpur rule
   name: 'LoginForm',
   data () {
     return {
       show: false,
-      Mail: '',
-      Password: '',
+      eMail: '',
+      password: '',
       rules: {
         eMailRegix: /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+$/,
         eMailRules: [input => !!input || 'E-mail is required', input => this.rules.eMailRegix.test(input) || 'it is not the correct email address.']
       }
+    }
+  },
+  methods: {
+    login () {
+      firebase.initializeApp(config)
+      firebase.auth().signInWithEmailAndPassword(this.eMail, this.password).then(() => {
+        console.log(firebase.auth().currentUser.email)
+        this.$emit('LoginSuccessful')
+      }).catch((err) => {
+        console.log(err.message)
+      })
     }
   }
 }

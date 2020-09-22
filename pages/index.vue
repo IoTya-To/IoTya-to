@@ -11,7 +11,7 @@
         :z-index="5"
       >
         <v-layout justify-center>
-          <login-form />
+          <login-form @LoginSuccessful="LoginSuccessful"/>
         </v-layout>
         <v-layout justify-center>
           <v-btn
@@ -35,9 +35,6 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-btn @click="sout">
-          log
-        </v-btn>
         <v-btn @click="refresh">
           re
         </v-btn>
@@ -55,12 +52,8 @@
 // import Draggable from 'vuedraggable'
 import ChartCard from '../components/ChartCard'
 import LoginForm from '../components/LoginForm'
-import firebaseConfig from '../components/firebaseConfig'
-const firebase = require('firebase/app')
-require('firebase/auth')
-// todo fix config file
-firebase.initializeApp(firebaseConfig.config)
 
+// todo fix config file
 const io = require('socket.io-client')
 export default {
   components: { LoginForm, ChartCard },
@@ -135,13 +128,6 @@ export default {
     }
   },
   mounted () {
-    // auth test
-    // emal,password
-    firebase.auth().signInWithEmailAndPassword().then((UserCredential) => {
-      console.log(UserCredential)
-    }).catch((err) => {
-      console.log(err.message)
-    })
     const socket = io('http://localhost:8080', {
       reconnection: true,
       reconnectionAttempts: 10,
@@ -158,15 +144,15 @@ export default {
     })
   },
   methods: {
+    LoginSuccessful () {
+      this.loginOverlay = false
+    },
     getmd (item) {
       if (item.length < 4) {
         return 12 / item.length
       } else {
         return 3
       }
-    },
-    sout () {
-      console.log(this.charts)
     },
     refresh () {
       this.componentKey += 1

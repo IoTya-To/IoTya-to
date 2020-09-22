@@ -20,7 +20,7 @@
 </template>
 
 <script>
-const regExp = /^#([0-9]|[A-F]|[a-f]){6}$|^#([F0]|[f0]){3}$/
+const colorRegex = /^#([0-9]|[A-F]|[a-f]){6}$|^#([F0]|[f0]){3}$/
 export default {
   name: 'ColorPickOption',
   props: {
@@ -34,7 +34,7 @@ export default {
     return {
       chartdata_: this.chartdata,
       rules: {
-        HEXColor: value => regExp.test(value) || 'not HEX ColorCode'
+        HEXColor: value => colorRegex.test(value) || 'not HEX ColorCode'
       }
     }
   }
