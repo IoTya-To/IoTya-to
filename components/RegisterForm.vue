@@ -26,6 +26,17 @@
           </v-col>
         </v-row>
         <v-row>
+          <v-col>
+            <v-text-field
+              v-model="password"
+              :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="show ? 'text' : 'password'"
+              label="password"
+              @click:append="show = !show"
+            />
+          </v-col>
+        </v-row>
+        <v-row>
           <v-layout justify-center>
             <v-btn @click="login()">
               Login

@@ -10,9 +10,24 @@
         :value="loginOverlay"
         :z-index="5"
       >
-        <v-layout justify-center>
-          <login-form @LoginSuccessful="LoginSuccessful"/>
-        </v-layout>
+        <v-card>
+          <v-tabs v-model="tab" fixed-tabs :light="!$vuetify.theme.dark">
+            <v-tab>
+              Login
+            </v-tab>
+            <v-tab>
+              Register
+            </v-tab>
+          </v-tabs>
+          <v-tabs-items v-model="tab">
+            <v-tab-item>
+              <login-form @LoginSuccessful="LoginSuccessful" />
+            </v-tab-item>
+            <v-tab-item>
+              <RegisterForm />
+            </v-tab-item>
+          </v-tabs-items>
+        </v-card>
         <v-layout justify-center>
           <v-btn
             color="primary"
@@ -52,17 +67,19 @@
 // import Draggable from 'vuedraggable'
 import ChartCard from '../components/ChartCard'
 import LoginForm from '../components/LoginForm'
+import RegisterForm from '../components/RegisterForm'
 
 // todo fix config file
 const io = require('socket.io-client')
 export default {
-  components: { LoginForm, ChartCard },
+  components: { LoginForm, ChartCard, RegisterForm },
   data () {
     return {
       serverAddress: 'https://localhost:8080',
       componentKey: 0,
       baseGridSize: 4,
       loginOverlay: false,
+      tab: null,
       charts: [
         {
           id: 'chart1',
