@@ -53,12 +53,6 @@
         <v-btn @click="refresh">
           re
         </v-btn>
-        <v-btn>
-          test
-        </v-btn>
-        <v-btn @click="addData('chart1','Dataset 1',0)">
-          addData
-        </v-btn>
       </v-row>
     </v-container>
   </v-layout>
@@ -175,7 +169,6 @@ export default {
       this.componentKey += 1
     },
     addData (receiveData) {
-      console.log('methio')
       receiveData.data.forEach((data) => {
         const chart = this.findChart(data.id)
         data.datasets.forEach((dataset) => {

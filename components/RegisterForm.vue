@@ -21,6 +21,7 @@
               :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
               :type="show ? 'text' : 'password'"
               label="password"
+              :rules="rules.passwordRules"
               @click:append="show = !show"
             />
           </v-col>
@@ -28,10 +29,10 @@
         <v-row>
           <v-col>
             <v-text-field
-              v-model="password"
               :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
               :type="show ? 'text' : 'password'"
               label="password"
+              :rules="rules.CheckPassword"
               @click:append="show = !show"
             />
           </v-col>
@@ -60,7 +61,10 @@ export default {
       password: '',
       rules: {
         eMailRegix: /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+$/,
-        eMailRules: [input => !!input || 'E-mail is required', input => this.rules.eMailRegix.test(input) || 'it is not the correct email address.']
+        passwordRegix: /^(?=.*\d)(?=.*[a-z])(?=.+[A-Z]).{8,}$/,
+        eMailRules: [input => !!input || 'E-mail is required', input => this.rules.eMailRegix.test(input) || 'it is not the correct email address.'],
+        passwordRules: [input => !!input || 'Password is required', input => this.rules.passwordRegix.test(input) || 'this password is so weak'],
+        CheckPassword: [input => input === this.password || 'Passwords do not match']
       }
     }
   },
