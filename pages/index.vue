@@ -59,12 +59,13 @@
 </template>
 <script>
 // import Draggable from 'vuedraggable'
+import firebase from 'firebase/app'
+import io from 'socket.io-client'
+
 import ChartCard from '../components/ChartCard'
 import LoginForm from '../components/LoginForm'
 import RegisterForm from '../components/RegisterForm'
-
-// todo fix config file
-const io = require('socket.io-client')
+import config from '../components/firebaseConfig'
 export default {
   components: { LoginForm, ChartCard, RegisterForm },
   data () {
@@ -139,6 +140,7 @@ export default {
     }
   },
   mounted () {
+    this.firebaseInitialize()
     const socket = io('http://localhost:8080', {
       reconnection: true,
       reconnectionAttempts: 10,
@@ -155,6 +157,17 @@ export default {
     })
   },
   methods: {
+    firebaseInitialize () {
+      // if first, initializeFirebaseApp
+      if (firebase.apps.length === 0) { firebase.initializeApp(config) }
+      const user = firebase.auth().currentUser
+      if (user) {
+        // loggedin ignore
+      } else {
+        // todo ログイン画面の強制表示
+        // notloggedin
+      }
+    },
     LoginSuccessful () {
       this.loginOverlay = false
     },

@@ -9,6 +9,7 @@
           <v-col>
             <v-text-field
               v-model="eMail"
+              :disabled="loading"
               label="e-mail"
               :rules="rules.eMailRules"
             />
@@ -18,6 +19,7 @@
           <v-col>
             <v-text-field
               v-model="password"
+              :disabled="loading"
               :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
               :type="show ? 'text' : 'password'"
               label="password"
@@ -27,7 +29,11 @@
         </v-row>
         <v-row>
           <v-layout justify-center>
-            <v-btn @click="login()">
+            <v-btn
+              :loading="loading"
+              :disabled="loading"
+              @click="login"
+            >
               Login
             </v-btn>
           </v-layout>
@@ -37,8 +43,7 @@
   </v-container>
 </template>
 <script>
-import config from '../components/firebaseConfig'
-const firebase = require('firebase/app')
+import firebase from 'firebase/app'
 require('firebase/auth')
 export default {
   name: 'LoginForm',
@@ -47,6 +52,7 @@ export default {
       show: false,
       eMail: '',
       password: '',
+      loading: false,
       rules: {
         eMailRegix: /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+$/,
         eMailRules: [input => !!input || 'E-mail is required', input => this.rules.eMailRegix.test(input) || 'it is not the correct email address.']
@@ -55,11 +61,13 @@ export default {
   },
   methods: {
     login () {
-      firebase.initializeApp(config)
+      this.loading = true
       firebase.auth().signInWithEmailAndPassword(this.eMail, this.password).then(() => {
         console.log(firebase.auth().currentUser.email)
+        this.loading = false
         this.$emit('LoginSuccessful')
       }).catch((err) => {
+        this.loading = false
         console.log(err.message)
       })
     }
