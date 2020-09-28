@@ -39,8 +39,8 @@
         </v-row>
         <v-row>
           <v-layout justify-center>
-            <v-btn @click="login()">
-              Login
+            <v-btn @click="register()">
+              Register
             </v-btn>
           </v-layout>
         </v-row>
@@ -49,7 +49,6 @@
   </v-container>
 </template>
 <script>
-import config from '../components/firebaseConfig'
 const firebase = require('firebase/app')
 require('firebase/auth')
 export default {
@@ -69,13 +68,20 @@ export default {
     }
   },
   methods: {
-    login () {
-      firebase.initializeApp(config)
-      firebase.auth().signInWithEmailAndPassword(this.eMail, this.password).then(() => {
-        console.log(firebase.auth().currentUser.email)
-        this.$emit('LoginSuccessful')
-      }).catch((err) => {
-        console.log(err.message)
+    register () {
+      firebase.auth().createUserWithEmailAndPassword(this.eMail, this.password).then(() => {
+        console.log('register is success')
+        const user = firebase.auth().currentUser
+        if (user) {
+          user.sendEmailVerification()
+          // todo DBに未認証のフラグを建てる。
+        }
+      }).catch(function (error) {
+        // Handle Errors here.
+        const errorCode = error.code
+        const errorMessage = error.message
+        console.log(`errorcode : ${errorCode} , ${errorMessage}`)
+        // ...
       })
     }
   }
