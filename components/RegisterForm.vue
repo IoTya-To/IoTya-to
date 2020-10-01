@@ -50,6 +50,7 @@
 </template>
 <script>
 const firebase = require('firebase/app')
+const database = firebase.database()
 require('firebase/auth')
 export default {
   name: 'LoginForm',
@@ -68,12 +69,22 @@ export default {
     }
   },
   methods: {
+    makeUserDir (userID) {
+      database.ref('/UserData/' + userID).set({ key: 'value' }, (error) => {
+        if (error) {
+          console.log(error)
+        } else {
+          console.log('書き込みできた')
+        }
+      })
+    },
     register () {
       firebase.auth().createUserWithEmailAndPassword(this.eMail, this.password).then(() => {
         console.log('register is success')
         const user = firebase.auth().currentUser
         if (user) {
           user.sendEmailVerification()
+          this.makeUserDir(user.uid)
           // todo DBに未認証のフラグを建てる。
         }
       }).catch(function (error) {
