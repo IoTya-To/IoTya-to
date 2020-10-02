@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card :light="!$vuetify.theme.dark" flat>
-      <v-card-title>
+      <v-card-title >
         Login
       </v-card-title>
       <v-col class="pa-6">
@@ -50,7 +50,6 @@
 </template>
 <script>
 const firebase = require('firebase/app')
-const database = firebase.database()
 require('firebase/auth')
 export default {
   name: 'LoginForm',
@@ -70,6 +69,7 @@ export default {
   },
   methods: {
     makeUserDir (userID) {
+      const database = firebase.database()
       database.ref('/UserData/' + userID).set({ key: 'value' }, (error) => {
         if (error) {
           console.log(error)

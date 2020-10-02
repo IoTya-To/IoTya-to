@@ -1,6 +1,9 @@
 <template>
   <v-layout column justify-center align-center>
     <v-container fluid>
+      <v-snackbar v-model="alert" :color="alertColor">
+        {{ alertText }}
+      </v-snackbar>
       <v-btn @click="loginOverlay=true">
         show
       </v-btn>
@@ -21,7 +24,7 @@
           </v-tabs>
           <v-tabs-items v-model="tab">
             <v-tab-item>
-              <login-form @LoginSuccessful="LoginSuccessful" />
+              <login-form @LoginSuccessful="LoginSuccessful" @onAlert="showAlert" />
             </v-tab-item>
             <v-tab-item>
               <RegisterForm />
@@ -65,7 +68,8 @@ import io from 'socket.io-client'
 import ChartCard from '../components/ChartCard'
 import LoginForm from '../components/LoginForm'
 import RegisterForm from '../components/RegisterForm'
-import config from '../components/firebaseConfig'
+import config from '../src/firebaseConfig'
+import alertColor from '../src/AlertColor'
 export default {
   components: { LoginForm, ChartCard, RegisterForm },
   data () {
@@ -73,6 +77,9 @@ export default {
       serverAddress: 'https://localhost:8080',
       componentKey: 0,
       baseGridSize: 4,
+      alert: true,
+      alertText: '',
+      alertColor: alertColor.success,
       loginOverlay: false,
       tab: null,
       charts: [
@@ -177,6 +184,11 @@ export default {
       } else {
         return 3
       }
+    },
+    showAlert (args) {
+      this.alertText = args.message
+      this.alertColor = args.color
+      this.alert = true
     },
     refresh () {
       this.componentKey += 1

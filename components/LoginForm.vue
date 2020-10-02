@@ -44,6 +44,7 @@
 </template>
 <script>
 import firebase from 'firebase/app'
+import alertColor from '../src/AlertColor'
 require('firebase/auth')
 export default {
   name: 'LoginForm',
@@ -65,6 +66,7 @@ export default {
       firebase.auth().signInWithEmailAndPassword(this.eMail, this.password).then(() => {
         console.log(firebase.auth().currentUser.email)
         this.loading = false
+        this.$emit('onAlert', { message: 'LoginSuccessful', color: alertColor.success })
         this.$emit('LoginSuccessful')
       }).catch((err) => {
         this.loading = false
