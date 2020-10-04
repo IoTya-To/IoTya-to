@@ -5,7 +5,7 @@
         {{ alertText }}
       </v-snackbar>
       <v-btn @click="loginOverlay=true">
-        show
+        Login/Register
       </v-btn>
       <v-overlay
         :absolute="true"
@@ -176,6 +176,7 @@ export default {
       }
     },
     LoginSuccessful () {
+      this.showAlert({ message: 'LoginSuccessful', color: alertColor.success })
       this.loginOverlay = false
     },
     getmd (item) {

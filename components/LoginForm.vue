@@ -66,10 +66,10 @@ export default {
       firebase.auth().signInWithEmailAndPassword(this.eMail, this.password).then(() => {
         console.log(firebase.auth().currentUser.email)
         this.loading = false
-        this.$emit('onAlert', { message: 'LoginSuccessful', color: alertColor.success })
         this.$emit('LoginSuccessful')
       }).catch((err) => {
         this.loading = false
+        this.$emit('onAlert', { message: err.message, color: alertColor.error })
         console.log(err.message)
       })
     }
