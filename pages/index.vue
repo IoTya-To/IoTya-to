@@ -27,7 +27,7 @@
               <login-form @LoginSuccessful="LoginSuccessful" @onAlert="showAlert" />
             </v-tab-item>
             <v-tab-item>
-              <RegisterForm />
+              <RegisterForm @onAlert="showAlert" />
             </v-tab-item>
           </v-tabs-items>
         </v-card>
@@ -77,7 +77,7 @@ export default {
       serverAddress: 'https://localhost:8080',
       componentKey: 0,
       baseGridSize: 4,
-      alert: true,
+      alert: false,
       alertText: '',
       alertColor: alertColor.success,
       loginOverlay: false,
@@ -208,11 +208,11 @@ export default {
       })
     },
     findChart (chartid) {
-      return this.charts.find((chart) => { return chart.id === chartid })
+      return this.charts.find(chart => chart.id === chartid)
     },
     findData (chart, label) {
       console.log(chart)
-      return chart.datasets.find((dataset) => { return dataset.label === label }).data
+      return chart.datasets.find(dataset => dataset.label === label).data
     }
   }
 }

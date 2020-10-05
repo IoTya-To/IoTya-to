@@ -2,7 +2,7 @@
   <v-container>
     <v-card :light="!$vuetify.theme.dark" flat>
       <v-card-title>
-        Login
+        Register
       </v-card-title>
       <v-col class="pa-6">
         <v-row>
@@ -32,16 +32,12 @@
               :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
               :type="show ? 'text' : 'password'"
               label="password"
-              :rules="rules.CheckPassword"
+              :rules="rules.checkPassword"
               @click:append="show = !show"
             />
           </v-col>
         </v-row>
         <v-row>
-
-          <v-btn @click="test">
-            aaaaa
-          </v-btn>
           <v-layout justify-center>
             <v-btn @click="register()">
               Register
@@ -53,6 +49,8 @@
   </v-container>
 </template>
 <script>
+import alertColor from '@/src/AlertColor'
+
 const firebase = require('firebase/app')
 require('firebase/auth')
 export default {
@@ -63,11 +61,11 @@ export default {
       eMail: '',
       password: '',
       rules: {
-        eMailRegex: /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+$/,
-        passwordRegex: /^(?=.*\d)(?=.*[a-z])(?=.+[A-Z]).{8,}$/,
-        eMailRules: [input => !!input || 'E-mail is required', input => this.rules.eMailRegex.test(input) || 'it is not the correct email address.'],
-        passwordRules: [input => !!input || 'Password is required', input => this.rules.passwordRegex.test(input) || 'this password is so weak'],
-        CheckPassword: [input => input === this.password || 'Passwords do not match']
+        mailAddressPattern: /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+$/,
+        passwordPattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+        eMailRules: [input => !!input || 'E-mail is required', input => this.rules.mailAddressPattern.test(input) || 'it is not the correct email address.'],
+        passwordRules: [input => !!input || 'Password is required', input => this.rules.passwordPattern.test(input) || 'this password is so weak'],
+        checkPassword: [input => input === this.password || 'Passwords do not match']
       }
     }
   },
@@ -77,7 +75,7 @@ export default {
     },
     makeUserDir (userID) {
       const database = firebase.database()
-      database.ref('/UserData/' + userID).set({ key: 'value' }, (error) => {
+      database.ref('/UserData/' + userID).set({ emailVerified: false }, (error) => {
         if (error) {
           console.log(error)
         } else {
@@ -90,16 +88,13 @@ export default {
         console.log('register is success')
         const user = firebase.auth().currentUser
         if (user) {
-          user.sendEmailVerification()
+          // user.sendEmailVerification()
           this.makeUserDir(user.uid)
           // todo DBに未認証のフラグを建てる。
         }
-      }).catch(function (error) {
-        // Handle Errors here.
-        const errorCode = error.code
-        const errorMessage = error.message
-        console.log(`errorcode : ${errorCode} , ${errorMessage}`)
-        // ...
+      }).catch((error) => {
+        this.$emit('onAlert', { message: error.message, color: alertColor.error })
+        console.log(`errorcode : ${error.code} , ${error.message}`)
       })
     }
   }
