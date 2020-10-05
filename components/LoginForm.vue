@@ -55,8 +55,8 @@ export default {
       password: '',
       loading: false,
       rules: {
-        eMailRegix: /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+$/,
-        eMailRules: [input => !!input || 'E-mail is required', input => this.rules.eMailRegix.test(input) || 'it is not the correct email address.']
+        eMailRegex: /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+$/,
+        eMailRules: [input => !!input || 'E-mail is required', input => this.rules.eMailRegex.test(input) || 'it is not the correct email address.']
       }
     }
   },

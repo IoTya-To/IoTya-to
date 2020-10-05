@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card :light="!$vuetify.theme.dark" flat>
-      <v-card-title >
+      <v-card-title>
         Login
       </v-card-title>
       <v-col class="pa-6">
@@ -38,6 +38,10 @@
           </v-col>
         </v-row>
         <v-row>
+
+          <v-btn @click="test">
+            aaaaa
+          </v-btn>
           <v-layout justify-center>
             <v-btn @click="register()">
               Register
@@ -59,15 +63,18 @@ export default {
       eMail: '',
       password: '',
       rules: {
-        eMailRegix: /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+$/,
-        passwordRegix: /^(?=.*\d)(?=.*[a-z])(?=.+[A-Z]).{8,}$/,
-        eMailRules: [input => !!input || 'E-mail is required', input => this.rules.eMailRegix.test(input) || 'it is not the correct email address.'],
-        passwordRules: [input => !!input || 'Password is required', input => this.rules.passwordRegix.test(input) || 'this password is so weak'],
+        eMailRegex: /^[\w\-._]+@[\w\-._]+\.[A-Za-z]+$/,
+        passwordRegex: /^(?=.*\d)(?=.*[a-z])(?=.+[A-Z]).{8,}$/,
+        eMailRules: [input => !!input || 'E-mail is required', input => this.rules.eMailRegex.test(input) || 'it is not the correct email address.'],
+        passwordRules: [input => !!input || 'Password is required', input => this.rules.passwordRegex.test(input) || 'this password is so weak'],
         CheckPassword: [input => input === this.password || 'Passwords do not match']
       }
     }
   },
   methods: {
+    test () {
+      console.log(this.rules.eMailRules)
+    },
     makeUserDir (userID) {
       const database = firebase.database()
       database.ref('/UserData/' + userID).set({ key: 'value' }, (error) => {
