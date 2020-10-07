@@ -146,8 +146,10 @@ export default {
       ]
     }
   },
-  mounted () {
+  created () {
     this.firebaseInitialize()
+  },
+  mounted () {
     const socket = io('http://localhost:8080', {
       reconnection: true,
       reconnectionAttempts: 10,
@@ -171,7 +173,7 @@ export default {
       if (user) {
         // loggedin ignore
       } else {
-        // todo ログイン画面の強制表示
+        this.loginOverlay = true
         // notloggedin
       }
     },
