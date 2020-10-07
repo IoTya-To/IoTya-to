@@ -62,6 +62,7 @@ export default {
   },
   methods: {
     login () {
+      firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
       this.loading = true
       firebase.auth().signInWithEmailAndPassword(this.eMail, this.password).then(() => {
         console.log(firebase.auth().currentUser.email)

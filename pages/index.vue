@@ -5,7 +5,10 @@
         {{ alertText }}
       </v-snackbar>
       <v-btn @click="loginOverlay=true">
-        Login/Register
+        Login/Register {{ user ? user.email : 'null' }}
+      </v-btn>
+      <v-btn @click="logout">
+        logout
       </v-btn>
       <v-overlay
         :absolute="true"
@@ -74,6 +77,7 @@ export default {
   components: { LoginForm, ChartCard, RegisterForm },
   data () {
     return {
+      user: null,
       serverAddress: 'https://localhost:8080',
       componentKey: 0,
       baseGridSize: 4,
@@ -147,9 +151,9 @@ export default {
     }
   },
   created () {
-    this.firebaseInitialize()
   },
   mounted () {
+    this.firebaseInitialize()
     const socket = io('http://localhost:8080', {
       reconnection: true,
       reconnectionAttempts: 10,
@@ -168,14 +172,24 @@ export default {
   methods: {
     firebaseInitialize () {
       // if first, initializeFirebaseApp
-      if (firebase.apps.length === 0) { firebase.initializeApp(config) }
-      const user = firebase.auth().currentUser
-      if (user) {
-        // loggedin ignore
-      } else {
-        this.loginOverlay = true
-        // notloggedin
+      if (firebase.apps.length === 0) {
+        firebase.initializeApp(config)
       }
+      // ↓更新されるたびに呼び出し?↓
+      firebase.auth().onAuthStateChanged((user) => {
+        console.log(user)
+        this.user = user
+        console.log(this.user)
+        if (this.user == null) {
+          // notloggedin
+          this.loginOverlay = true
+        } else {
+          // loggedin ignore
+        }
+      })
+    },
+    logout () {
+      firebase.auth().signOut()
     },
     LoginSuccessful () {
       this.showAlert({ message: 'LoginSuccessful', color: alertColor.success })
