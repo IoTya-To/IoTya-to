@@ -85,7 +85,6 @@ export default {
     },
     register () {
       firebase.auth().createUserWithEmailAndPassword(this.eMail, this.password).then(() => {
-        console.log('register is success')
         const user = firebase.auth().currentUser
         if (user) {
           // user.sendEmailVerification()
@@ -96,6 +95,7 @@ export default {
         this.$emit('onAlert', { message: error.message, color: alertColor.error })
         console.log(`errorcode : ${error.code} , ${error.message}`)
       })
+      this.$emit('onAlert', { message: 'register is success', color: alertColor.success })
     }
   }
 }
