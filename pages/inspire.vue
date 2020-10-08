@@ -2,7 +2,7 @@
   <v-layout>
     <v-container>
       <Draggable tag="v-row">
-        <v-col v-for="i in 10" :key="i" cols="4">
+        <v-col v-for="i in 10" :key="i" cols="3" class="ma-0">
           <v-card>
             <v-card-title>
               {{ i }}
