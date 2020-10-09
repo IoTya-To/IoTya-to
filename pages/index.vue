@@ -91,68 +91,7 @@ export default {
       alertColor: alertColor.success,
       loginOverlay: false,
       tab: null,
-      charts: [
-        {
-          id: 'chart1',
-          chartTitle: 'ChartHoge',
-          datasets: [
-            {
-              label: 'Dataset 1',
-              fill: false,
-              borderColor: '#FF6384',
-              backgroundColor: '#FF6384'
-            },
-            {
-              label: 'Dataset 2',
-              fill: false,
-              borderColor: '#36A2EB',
-              backgroundColor: '#36A2EB'
-            },
-            {
-              label: 'Dataset 3',
-              fill: false,
-              borderColor: '#FFAA55',
-              backgroundColor: '#FFAA55'
-            }
-          ]
-        },
-        {
-          id: 'temp',
-          chartTitle: 'Chart2',
-          datasets: [
-            {
-              label: 'Dataset 1',
-              fill: false,
-              borderColor: '#00FF84',
-              backgroundColor: '#00FF84'
-            },
-            {
-              label: 'Dataset 2',
-              fill: false,
-              borderColor: '#AA05FF',
-              backgroundColor: '#AA05FF'
-            }
-          ]
-        },
-        {
-          id: 'temp',
-          chartTitle: 'Chart3',
-          datasets: [
-            {
-              label: 'Dataset 1',
-              fill: false,
-              borderColor: '#FFFF84',
-              backgroundColor: '#FFFF84'
-            },
-            {
-              label: 'Dataset 2',
-              fill: false,
-              borderColor: '#AADDFF',
-              backgroundColor: '#AADD FF'
-            }
-          ]
-        }
-      ]
+      charts: ''
     }
   },
   created () {
@@ -176,17 +115,21 @@ export default {
     })
   },
   methods: {
-    firebaseInitialize () {
+    async firebaseInitialize () {
       // if first, initializeFirebaseApp
       if (firebase.apps.length === 0) {
         firebase.initializeApp(config)
       }
-      this.getLoginStatus().then((status) => {
+      await this.getLoginStatus().then((status) => {
         if (status === false) {
           this.loginOverlay = true
         }
-        this.charts = this.getUserData()
-        console.log(this.charts)
+      })
+      await this.getUserData().then((data) => {
+        if (data == null) {
+          return
+        }
+        this.charts = data
       })
     },
     async getLoginStatus () {
@@ -205,11 +148,15 @@ export default {
         }))
       return status
     },
-    getUserData () {
-      database().ref('/UserData/' + this.user.uid + '/charts').on('value', (snapshot) => {
-        console.log(snapshot.val())
-        return snapshot.val()
+    async getUserData () {
+      let data = null
+      await new Promise((resolve) => {
+        database().ref('/UserData/' + this.user.uid + '/charts').on('value', (snapshot) => {
+          data = snapshot.val()
+          resolve()
+        })
       })
+      return data
     },
     logout () {
       firebase.auth().signOut()
