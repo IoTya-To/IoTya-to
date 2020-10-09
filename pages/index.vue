@@ -10,6 +10,9 @@
       <v-btn @click="logout">
         logout
       </v-btn>
+      <v-btn @click="getUserData">
+        get
+      </v-btn>
       <v-overlay
         :absolute="true"
         :opacity="0.85"
@@ -203,8 +206,9 @@ export default {
       return status
     },
     getUserData () {
-      database().ref('/UserData/' + this.user.uid + '/charts').on('value', (data) => {
-        return data
+      database().ref('/UserData/' + this.user.uid + '/charts').on('value', (snapshot) => {
+        console.log(snapshot.val())
+        return snapshot.val()
       })
     },
     logout () {
