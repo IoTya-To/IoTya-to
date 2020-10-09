@@ -4,6 +4,9 @@
     <v-btn @click="upload">
       upload
     </v-btn>
+    <v-btn @click="log">
+      log
+    </v-btn>
   </v-container>
 </template>
 
@@ -28,6 +31,9 @@ export default {
           console.log('書き込みできた')
         }
       })
+    },
+    log () {
+      console.log(JSON.stringify(this.charts))
     }
   }
 }

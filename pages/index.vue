@@ -43,7 +43,7 @@
           </v-btn>
         </v-layout>
       </v-overlay>
-      <v-row>
+      <v-row :key="componentKey">
         <v-col
           v-for="(chart,n) in charts"
           :key="n"
@@ -73,6 +73,8 @@ import LoginForm from '../components/LoginForm'
 import RegisterForm from '../components/RegisterForm'
 import config from '../src/firebaseConfig'
 import alertColor from '../src/AlertColor'
+require('firebase/database')
+const database = firebase.database
 export default {
   components: { LoginForm, ChartCard, RegisterForm },
   data () {
@@ -161,6 +163,7 @@ export default {
       reconnectionDelayMax: 5000,
       randomizationFactor: 0.5
     })
+
     socket.on('connect', () => {
       console.log(`socket.connected: ${socket.connected}`)
       socket.on('ServerMessage', (message) => {
@@ -175,17 +178,33 @@ export default {
       if (firebase.apps.length === 0) {
         firebase.initializeApp(config)
       }
-      // ↓更新されるたびに呼び出し?↓
-      firebase.auth().onAuthStateChanged((user) => {
-        console.log(user)
-        this.user = user
-        console.log(this.user)
-        if (this.user == null) {
-          // notloggedin
+      this.getLoginStatus().then((status) => {
+        if (status === false) {
           this.loginOverlay = true
-        } else {
-          // loggedin ignore
         }
+        this.charts = this.getUserData()
+        console.log(this.charts)
+      })
+    },
+    async getLoginStatus () {
+      let status = false
+      await new Promise(resolve =>
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            this.user = user
+            status = true
+            resolve()
+          } else {
+            // notLoggedin
+            status = false
+            resolve()
+          }
+        }))
+      return status
+    },
+    getUserData () {
+      database().ref('/UserData/' + this.user.uid + '/charts').on('value', (data) => {
+        return data
       })
     },
     logout () {
