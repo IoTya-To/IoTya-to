@@ -88,7 +88,7 @@ export default {
     }
   },
   created () {
-    this.$nuxt.$on('event', () => {
+    this.$nuxt.$on('refresh', () => {
       this.componentKey += 1
     })
   },

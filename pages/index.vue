@@ -185,7 +185,7 @@ export default {
       this.alert = true
     },
     refresh () {
-      this.$nuxt.$emit('event')
+      this.$nuxt.$emit('refresh')
     },
     addData (receiveData) {
       receiveData.data.forEach((data) => {
