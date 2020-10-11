@@ -35,13 +35,12 @@
           mdi-menu
         </v-icon>
       </v-app-bar-nav-icon>
-
       <v-toolbar-title class="white--text" v-text="title" />
       <v-spacer />
     </v-app-bar>
     <v-main>
       <v-container>
-        <nuxt />
+        <nuxt :key="componentKey" />
       </v-container>
     </v-main>
     <v-footer
@@ -52,7 +51,6 @@
     </v-footer>
   </v-app>
 </template>
-
 <script>
 export default {
   data () {
@@ -60,6 +58,7 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
+      componentKey: 0,
       items: [
         {
           icon: 'mdi-apps',
@@ -87,6 +86,14 @@ export default {
       rightDrawer: false,
       title: 'IoTya-to'
     }
+  },
+  created () {
+    this.$nuxt.$on('event', () => {
+      this.componentKey += 1
+    })
+  },
+  methods: {
+
   }
 }
 </script>

@@ -1,4 +1,4 @@
-<template :key="componentKey">
+<template >
   <v-layout column justify-center align-center>
     <v-container fluid>
       <v-snackbar v-model="alert" :color="alertColor">
@@ -89,7 +89,6 @@ export default {
     return {
       user: null,
       serverAddress: 'https://localhost:8080',
-      componentKey: 0,
       baseGridSize: 4,
       alert: false,
       alertText: '',
@@ -166,10 +165,12 @@ export default {
     },
     logout () {
       firebase.auth().signOut()
+      this.refresh()
     },
     LoginSuccessful () {
       this.showAlert({ message: 'LoginSuccessful', color: alertColor.success })
       this.loginOverlay = false
+      this.refresh()
     },
     getmd (item) {
       if (item.length < 4) {
@@ -184,7 +185,7 @@ export default {
       this.alert = true
     },
     refresh () {
-      this.componentKey += 1
+      this.$nuxt.$emit('event')
     },
     addData (receiveData) {
       receiveData.data.forEach((data) => {
