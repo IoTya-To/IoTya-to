@@ -1,4 +1,4 @@
-<template>
+<template :key="componentKey">
   <v-layout column justify-center align-center>
     <v-container fluid>
       <v-snackbar v-model="alert" :color="alertColor">
@@ -46,7 +46,7 @@
           </v-btn>
         </v-layout>
       </v-overlay>
-      <v-row :key="componentKey">
+      <v-row>
         <v-col
           v-for="(chart,n) in charts"
           :key="n"
@@ -74,10 +74,15 @@ import io from 'socket.io-client'
 import ChartCard from '../components/ChartCard'
 import LoginForm from '../components/LoginForm'
 import RegisterForm from '../components/RegisterForm'
+
 import config from '../src/firebaseConfig'
 import alertColor from '../src/AlertColor'
-require('firebase/database')
+import FireBaseUtil from '../src/FireBaseUtil'
+const fUtil = new FireBaseUtil(firebase)
+
 const database = firebase.database
+require('firebase/database')
+
 export default {
   components: { LoginForm, ChartCard, RegisterForm },
   data () {
@@ -120,19 +125,19 @@ export default {
       if (firebase.apps.length === 0) {
         firebase.initializeApp(config)
       }
-      await this.getLoginStatus().then((status) => {
-        if (status === false) {
-          this.loginOverlay = true
-        }
-      })
-      await this.getUserData().then((data) => {
-        if (data == null) {
-          return
-        }
-        this.charts = data
-      })
+      const user = await fUtil.getLoggedinUser()
+      if (user == null) {
+        // not Logged in
+        this.loginOverlay = true
+        return
+      } else {
+        // logged in
+        this.user = user
+      }
+      this.charts = await fUtil.getUserData('/UserData/' + this.user.uid + '/charts')
     },
     async getLoginStatus () {
+      console.log('status')
       let status = false
       await new Promise(resolve =>
         firebase.auth().onAuthStateChanged((user) => {
@@ -149,6 +154,7 @@ export default {
       return status
     },
     async getUserData () {
+      console.log('data')
       let data = null
       await new Promise((resolve) => {
         database().ref('/UserData/' + this.user.uid + '/charts').on('value', (snapshot) => {
