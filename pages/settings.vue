@@ -26,6 +26,13 @@
                 <v-text-field label="SecretKey" />
               </v-list-item-action>
             </v-list-item>
+            <v-list-item>
+              <v-layout justify-center>
+                <v-btn>
+                  Save
+                </v-btn>
+              </v-layout>
+            </v-list-item>
           </v-list>
         </v-card>
       </v-layout>
@@ -36,8 +43,17 @@
   </v-container>
 </template>
 <script>
+import firebase from 'firebase/app'
 import UploadChartsJson from '@/components/uploadCharts-json'
+import FireBaseUtil from '@/src/FireBaseUtil'
+const fUtil = new FireBaseUtil(firebase)
+
 export default {
-  components: { UploadChartsJsonVue: UploadChartsJson }
+  components: { UploadChartsJsonVue: UploadChartsJson },
+  methods: {
+    saveSetting () {
+      fUtil.setUserData()
+    }
+  }
 }
 </script>

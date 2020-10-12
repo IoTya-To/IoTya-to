@@ -1,4 +1,4 @@
-<template >
+<template>
   <v-layout column justify-center align-center>
     <v-container fluid>
       <v-snackbar v-model="alert" :color="alertColor">
@@ -131,6 +131,7 @@ export default {
         return
       } else {
         // logged in
+        this.$store.commit('User/set', user.uid)
         this.user = user
       }
       this.charts = await fUtil.getUserData('/UserData/' + this.user.uid + '/charts')
