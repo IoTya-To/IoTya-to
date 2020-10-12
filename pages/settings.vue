@@ -28,7 +28,7 @@
             </v-list-item>
             <v-list-item>
               <v-layout justify-center>
-                <v-btn>
+                <v-btn @click="saveSetting">
                   Save
                 </v-btn>
               </v-layout>
@@ -52,7 +52,8 @@ export default {
   components: { UploadChartsJsonVue: UploadChartsJson },
   methods: {
     saveSetting () {
-      fUtil.setUserData()
+      fUtil.setUserData('/UserData/' +
+        this.$store.state.User.uid + '/settings/', { darkTheme: this.$vuetify.theme.dark })
     }
   }
 }

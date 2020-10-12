@@ -10,9 +10,6 @@
       <v-btn @click="logout">
         logout
       </v-btn>
-      <v-btn @click="getUserData">
-        get
-      </v-btn>
       <v-overlay
         :absolute="true"
         :opacity="0.85"
@@ -80,7 +77,6 @@ import alertColor from '../src/AlertColor'
 import FireBaseUtil from '../src/FireBaseUtil'
 const fUtil = new FireBaseUtil(firebase)
 
-const database = firebase.database
 require('firebase/database')
 
 export default {
@@ -134,7 +130,10 @@ export default {
         this.$store.commit('User/set', user.uid)
         this.user = user
       }
-      this.charts = await fUtil.getUserData('/UserData/' + this.user.uid + '/charts')
+      const userData = await fUtil.getUserData('/UserData/' + this.user.uid)
+      const settings = userData.settings
+      this.$vuetify.theme.dark = settings.darkTheme
+      this.charts = userData.charts
     },
     async getLoginStatus () {
       console.log('status')
@@ -152,17 +151,6 @@ export default {
           }
         }))
       return status
-    },
-    async getUserData () {
-      console.log('data')
-      let data = null
-      await new Promise((resolve) => {
-        database().ref('/UserData/' + this.user.uid + '/charts').on('value', (snapshot) => {
-          data = snapshot.val()
-          resolve()
-        })
-      })
-      return data
     },
     logout () {
       firebase.auth().signOut()
