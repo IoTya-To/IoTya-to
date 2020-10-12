@@ -29,6 +29,16 @@ export default class {
     return data
   }
 
+  setUserData (path, data) {
+    this.database().ref(path).set(data, (error) => {
+      if (error) {
+        return error
+      } else {
+        return true
+      }
+    })
+  }
+
   log () {
     console.log('log')
   }
