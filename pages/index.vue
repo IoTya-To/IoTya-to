@@ -52,13 +52,15 @@
           :md="getmd(charts)"
           :lg="getmd(charts)"
         >
-          <ChartCard v-model="charts[n]" :chart-list="charts[n]" />
+          <ChartCard :v-model="chart" :chart-list="chart" />
         </v-col>
-      </v-row>
-      <v-row>
-        <v-btn @click="refresh">
-          re
-        </v-btn>
+        <v-row>
+          <v-row>
+            <v-btn @click="refresh">
+              re
+            </v-btn>
+          </v-row>
+        </v-row>
       </v-row>
     </v-container>
   </v-layout>
