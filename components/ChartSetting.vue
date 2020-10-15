@@ -2,15 +2,14 @@
   <v-list>
     <v-list-item>
       <v-text-field
-        v-model="chartdataset_.label"
+        v-model="chartdataset.label"
         label="ChartLabel"
-        :value="chartdataset_.label"
-        @input="$emit('input', chartdataset_)"
+        :value="chartdataset.label"
+        @input="$emit('input', chartdataset)"
       />
     </v-list-item>
-    <v-list-item>
-    </v-list-item>
-    <color-pick-option v-model="chartdataset_" :chartdata="chartdataset_" />
+    <v-list-item />
+    <color-pick-option v-model="chartdataset" />
   </v-list>
 </template>
 
@@ -20,15 +19,17 @@ export default {
   name: 'ChartSetting',
   components: { ColorPickOption },
   props: {
-    chartdataset: {
+    value: {
       type: Object,
       required: true,
       default: null
     }
   },
-  data () {
-    return {
-      chartdataset_: this.chartdataset
+  computed: {
+    chartdataset: {
+      get () {
+        return this.value
+      }
     }
   }
 }

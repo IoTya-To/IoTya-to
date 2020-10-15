@@ -5,7 +5,7 @@
         <v-card-title
           class="px-2 py-0 mx-3 my-0"
         >
-          {{ chartList_.chartTitle }}
+          {{ chartList.chartTitle }}
         </v-card-title>
       </v-col>
       <v-layout align-center>
@@ -43,7 +43,7 @@
       </v-layout>
     </v-row>
     <div>
-      <streaming-chart :key="componentKey" v-model="chartList_" :data="chartList_.datasets" />
+      <streaming-chart :key="componentKey" v-model="chartList" :data="chartList.datasets" />
       <v-overlay
         absolute
         z-index="0"
@@ -55,17 +55,17 @@
               <v-list-item>
                 <v-text-field
                   label="ChartID"
-                  :v-model="chartList_.id"
-                  :value="chartList_.id"
+                  :v-model="chartList.id"
+                  :value="chartList.id"
                   required
-                  @input="$emit('input', chartList_)"
+                  @input="$emit('input', chartList)"
                 />
               </v-list-item>
               <v-list-item>
                 <v-text-field
-                  v-model="chartList_.chartTitle"
+                  v-model="chartList.chartTitle"
                   label="ChartTitle"
-                  :value="chartList_.chartTitle"
+                  :value="chartList.chartTitle"
                   max="10"
                   min="1"
                   required
@@ -79,8 +79,8 @@
                   :rules="[rules.chartNumMAX,rules.chartNumMIN]"
                 />
               </v-list-item>
-              <v-list-item v-for="(dataset,index) in chartList_.datasets" :key="index">
-                <chart-setting v-model="chartList_.datasets[index]" :chartdataset="chartList_.datasets[index]" />
+              <v-list-item v-for="(_,index) in chartList.datasets" :key="index">
+                <chart-setting v-model="chartList.datasets[index]" />
               </v-list-item>
             </v-list>
           </v-col>
@@ -101,7 +101,7 @@ export default {
   name: 'ChartCard',
   components: { ChartSetting },
   props: {
-    chartList: {
+    value: {
       type: Object,
       required: true,
       default: null
@@ -111,10 +111,19 @@ export default {
     return {
       componentKey: 0,
       overlay: false,
-      chartList_: this.chartList,
       rules: {
         chartNumMAX: value => parseInt(value) < 10 || 'Too much',
         chartNumMIN: value => parseInt(value) > 0 || 'Too little'
+      }
+    }
+  },
+  computed: {
+    /**
+      *@property {String} chartTitle
+     */
+    chartList: {
+      get () {
+        return this.value
       }
     }
   },

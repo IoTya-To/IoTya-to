@@ -45,14 +45,14 @@
       </v-overlay>
       <v-row>
         <v-col
-          v-for="(chart,n) in charts"
+          v-for="(_,n) in charts"
           :key="n"
           xs="12"
           sm="6"
           :md="getmd(charts)"
           :lg="getmd(charts)"
         >
-          <ChartCard :v-model="chart" :chart-list="chart" />
+          <ChartCard v-model="charts[n]" />
         </v-col>
         <v-row>
           <v-row>
@@ -136,23 +136,6 @@ export default {
       const settings = userData.settings
       this.$vuetify.theme.dark = settings.darkTheme
       this.charts = userData.charts
-    },
-    async getLoginStatus () {
-      console.log('status')
-      let status = false
-      await new Promise(resolve =>
-        firebase.auth().onAuthStateChanged((user) => {
-          if (user) {
-            this.user = user
-            status = true
-            resolve()
-          } else {
-            // notLoggedin
-            status = false
-            resolve()
-          }
-        }))
-      return status
     },
     logout () {
       firebase.auth().signOut()
