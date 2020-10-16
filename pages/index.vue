@@ -10,6 +10,9 @@
       <v-btn @click="logout">
         logout
       </v-btn>
+      <v-switch v-model="draggable">
+        test
+      </v-switch>
       <v-overlay
         :absolute="true"
         :opacity="0.85"
@@ -43,7 +46,7 @@
           </v-btn>
         </v-layout>
       </v-overlay>
-      <v-row>
+      <Draggable class="row" :disabled="!draggable">
         <v-col
           v-for="(_,n) in charts"
           :key="n"
@@ -52,7 +55,7 @@
           :md="getmd(charts)"
           :lg="getmd(charts)"
         >
-          <ChartCard v-model="charts[n]" />
+          <ChartCard v-model="charts[n]" :draggable="draggable"/>
         </v-col>
         <v-row>
           <v-row>
@@ -61,12 +64,12 @@
             </v-btn>
           </v-row>
         </v-row>
-      </v-row>
+      </Draggable>
     </v-container>
   </v-layout>
 </template>
 <script>
-// import Draggable from 'vuedraggable'
+import Draggable from 'vuedraggable'
 import firebase from 'firebase/app'
 import io from 'socket.io-client'
 
@@ -82,7 +85,7 @@ const fUtil = new FireBaseUtil(firebase)
 require('firebase/database')
 
 export default {
-  components: { LoginForm, ChartCard, RegisterForm },
+  components: { LoginForm, ChartCard, RegisterForm, Draggable },
   data () {
     return {
       user: null,
@@ -93,7 +96,8 @@ export default {
       alertColor: alertColor.success,
       loginOverlay: false,
       tab: null,
-      charts: ''
+      charts: '',
+      draggable: false
     }
   },
   created () {

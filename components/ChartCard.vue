@@ -43,7 +43,12 @@
       </v-layout>
     </v-row>
     <div>
-      <streaming-chart :key="componentKey" v-model="chartList" :data="chartList.datasets" />
+      <streaming-chart v-show="!draggable" :key="componentKey" v-model="chartList" :data="chartList.datasets" />
+      <v-skeleton-loader
+        v-show="draggable_"
+        class="ma-auto"
+        height="400"
+      />
       <v-overlay
         absolute
         z-index="0"
@@ -105,6 +110,11 @@ export default {
       type: Object,
       required: true,
       default: null
+    },
+    draggable: {
+      type: Boolean,
+      required: true,
+      defalt: false
     }
   },
   data () {
@@ -124,6 +134,11 @@ export default {
     chartList: {
       get () {
         return this.value
+      }
+    },
+    draggable_: {
+      get () {
+        return this.draggable
       }
     }
   },
