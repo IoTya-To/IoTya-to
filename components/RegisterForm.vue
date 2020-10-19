@@ -5,38 +5,40 @@
         Register
       </v-card-title>
       <v-col class="pa-6">
-        <v-row>
-          <v-col>
-            <v-text-field
-              v-model="eMail"
-              label="e-mail"
-              :rules="rules.eMailRules"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-text-field
-              v-model="password"
-              :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="show ? 'text' : 'password'"
-              label="password"
-              :rules="rules.passwordRules"
-              @click:append="show = !show"
-            />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-text-field
-              :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="show ? 'text' : 'password'"
-              label="password"
-              :rules="rules.checkPassword"
-              @click:append="show = !show"
-            />
-          </v-col>
-        </v-row>
+        <v-form ref="form">
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model="eMail"
+                label="e-mail"
+                :rules="rules.eMailRules"
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model="password"
+                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="show ? 'text' : 'password'"
+                label="password"
+                :rules="rules.passwordRules"
+                @click:append="show = !show"
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="show ? 'text' : 'password'"
+                label="password"
+                :rules="rules.checkPassword"
+                @click:append="show = !show"
+              />
+            </v-col>
+          </v-row>
+        </v-form>
         <v-row>
           <v-layout justify-center>
             <v-btn @click="register()">
@@ -70,22 +72,21 @@ export default {
     }
   },
   methods: {
-    test () {
-      console.log(this.rules.eMailRules)
-    },
     makeUserDir (userID) {
       const database = firebase.database()
       database.ref('/UserData/' + userID).set({ emailVerified: false }, (error) => {
         if (error) {
           console.log(error)
-        } else {
-          console.log('書き込みできた')
         }
       })
     },
     register () {
+      if (!this.$refs.form.validate()) {
+        return
+      }
       firebase.auth().createUserWithEmailAndPassword(this.eMail, this.password).then(() => {
         const user = firebase.auth().currentUser
+        this.$emit('onAlert', { message: 'register is success', color: alertColor.success })
         if (user) {
           // user.sendEmailVerification()
           this.makeUserDir(user.uid)
@@ -95,7 +96,6 @@ export default {
         this.$emit('onAlert', { message: error.message, color: alertColor.error })
         console.log(`errorcode : ${error.code} , ${error.message}`)
       })
-      this.$emit('onAlert', { message: 'register is success', color: alertColor.success })
     }
   }
 }
