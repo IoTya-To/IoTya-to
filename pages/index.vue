@@ -13,6 +13,12 @@
       <v-switch v-model="draggable">
         test
       </v-switch>
+      <v-btn @click="addChart">
+        add
+      </v-btn>
+      <v-btn @click="refresh">
+        re
+      </v-btn>
       <v-overlay
         :absolute="true"
         :opacity="0.85"
@@ -42,11 +48,11 @@
             color="primary"
             @click="loginOverlay = false"
           >
-            Hide Overlay
+            Close
           </v-btn>
         </v-layout>
       </v-overlay>
-      <Draggable class="row" :disabled="!draggable">
+      <Draggable class="row" :disabled="!draggable" :animation="200">
         <v-col
           v-for="(_,n) in charts"
           :key="n"
@@ -55,15 +61,18 @@
           :md="getmd(charts)"
           :lg="getmd(charts)"
         >
-          <ChartCard v-model="charts[n]" :draggable="draggable"/>
+          <ChartCard v-model="charts[n]" :draggable="draggable" />
         </v-col>
-        <v-row>
-          <v-row>
-            <v-btn @click="refresh">
-              re
-            </v-btn>
-          </v-row>
-        </v-row>
+        <v-col
+          xs="12"
+          sm="6"
+          :md="getmd(charts)"
+          :lg="getmd(charts)"
+        >
+          <v-card>
+            <add-chart-form :key="addcard" @input="addChart" />
+          </v-card>
+        </v-col>
       </Draggable>
     </v-container>
   </v-layout>
@@ -80,12 +89,13 @@ import RegisterForm from '../components/RegisterForm'
 import config from '../src/firebaseConfig'
 import alertColor from '../src/AlertColor'
 import FireBaseUtil from '../src/FireBaseUtil'
+import addChartForm from '@/components/addChartForm'
 const fUtil = new FireBaseUtil(firebase)
 
 require('firebase/database')
 
 export default {
-  components: { LoginForm, ChartCard, RegisterForm, Draggable },
+  components: { LoginForm, ChartCard, RegisterForm, Draggable, addChartForm },
   data () {
     return {
       user: null,
@@ -97,7 +107,8 @@ export default {
       loginOverlay: false,
       tab: null,
       charts: '',
-      draggable: false
+      draggable: false,
+      addcard: 0
     }
   },
   created () {
@@ -176,6 +187,20 @@ export default {
             y: dataset.value
           })
         })
+      })
+    },
+    addChart (Chart) {
+      this.addcard++
+      const data = {
+        chartTitle: Chart.chartTitle,
+        id: Chart.id,
+        datasets: Chart.datasets
+      }
+      console.log(Chart)
+      this.charts.push({
+        id: data.id,
+        chartTitle: data.chartTitle,
+        datasets: data.datasets
       })
     },
     findChart (chartid) {

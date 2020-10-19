@@ -17,14 +17,18 @@
           </v-card>
         </v-col>
       </Draggable>
+      <v-col>
+        <add-chart-form />
+      </v-col>
     </v-container>
   </v-layout>
 </template>
 <script>
 import Draggable from 'vuedraggable'
 import StreamingChart from '@/components/StreamingChart'
+import addChartForm from '@/components/addChartForm'
 export default {
-  components: { StreamingChart, Draggable },
+  components: { StreamingChart, Draggable, addChartForm },
   data () {
     return {
       dragable: true,
