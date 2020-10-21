@@ -29,6 +29,9 @@ export default {
     chartdataset: {
       get () {
         return this.value
+      },
+      set (dataset) {
+        // ignore
       }
     }
   }
