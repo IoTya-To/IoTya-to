@@ -70,7 +70,7 @@
           :lg="getmd(charts)"
         >
           <v-card>
-            <add-chart-form :key="addcard" @input="addChart" />
+            <add-chart-form :key="addcard" @input="addChart" @onAlert="showAlert" />
           </v-card>
         </v-col>
       </Draggable>

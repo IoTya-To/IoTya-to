@@ -3,12 +3,12 @@
     <v-card-title>
       AddChart
     </v-card-title>
-    <v-form>
+    <v-form ref="form">
       <v-col>
-        <v-text-field v-model="Chart.chartTitle" label="ChartTitle" />
+        <v-text-field v-model="Chart.chartTitle" label="ChartTitle" :rules="rules.ChartTitleRule"/>
       </v-col>
       <v-col>
-        <v-text-field v-model="Chart.id" label="ChartID" />
+        <v-text-field v-model="Chart.id" label="ChartID" :rules="rules.ChartIDRule"/>
       </v-col>
       <v-col v-for="(_,n) in Chart.datasets" :key="n">
         <chart-setting v-model="Chart.datasets[n]" />
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import alertColor from '../src/AlertColor'
 import ChartSetting from '@/components/ChartSetting'
 export default {
   name: 'AddChartForm',
@@ -40,11 +41,16 @@ export default {
         chartTitle: '',
         id: '',
         datasets: []
+      },
+      rules: {
+        ChartTitleRule: [input => !!input || 'ChartTitle is required'],
+        ChartIDRule: [input => !!input || 'ChartID is required']
       }
     }
   },
   mounted () {
     this.addChartItem()
+    console.log(alertColor)
   },
   methods: {
     addChartItem () {
@@ -56,6 +62,10 @@ export default {
       })
     },
     add () {
+      if (!this.$refs.form.validate()) {
+        this.$emit('onAlert', { message: 'Incorrect input.', color: alertColor.error })
+        return
+      }
       this.$emit('input', this.Chart)
     }
   }
