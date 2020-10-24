@@ -4,21 +4,24 @@
       <v-snackbar v-model="alert" :color="alertColor">
         {{ alertText }}
       </v-snackbar>
-      <v-btn @click="loginOverlay=true">
-        Login/Register {{ user ? user.email : 'null' }}
-      </v-btn>
-      <v-btn @click="logout">
-        logout
-      </v-btn>
-      <v-switch v-model="draggable">
-        test
-      </v-switch>
-      <v-btn @click="addChart">
-        add
-      </v-btn>
-      <v-btn @click="refresh">
-        re
-      </v-btn>
+      <v-row>
+        <v-btn @click="loginOverlay=true">
+          Login/Register {{ user ? user.email : 'null' }}
+        </v-btn>
+        <v-btn @click="logout">
+          logout
+        </v-btn>
+        <v-switch v-model="editMode">
+          test
+        </v-switch>
+        <v-btn @click="refresh">
+          re
+        </v-btn>
+        <v-spacer/>
+        <v-btn>
+          addChart
+        </v-btn>
+      </v-row>
       <v-overlay
         :absolute="true"
         :opacity="0.85"
@@ -52,7 +55,7 @@
           </v-btn>
         </v-layout>
       </v-overlay>
-      <Draggable class="row" :disabled="!draggable" :animation="200">
+      <Draggable class="row" :disabled="!editMode" :animation="200">
         <v-col
           v-for="(_,n) in charts"
           :key="n"
@@ -61,7 +64,7 @@
           :md="getmd(charts)"
           :lg="getmd(charts)"
         >
-          <ChartCard v-model="charts[n]" :draggable="draggable" />
+          <ChartCard v-model="charts[n]" :draggable="editMode" />
         </v-col>
         <v-col
           xs="12"
@@ -69,9 +72,7 @@
           :md="getmd(charts)"
           :lg="getmd(charts)"
         >
-          <v-card>
-            <add-chart-form :key="addcard" @input="addChart" @onAlert="showAlert" />
-          </v-card>
+          <add-chart-form :key="addcard" @input="addChart" @onAlert="showAlert" />
         </v-col>
       </Draggable>
     </v-container>
@@ -107,7 +108,7 @@ export default {
       loginOverlay: false,
       tab: null,
       charts: '',
-      draggable: false,
+      editMode: false,
       addcard: 0
     }
   },
