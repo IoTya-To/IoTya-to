@@ -1,10 +1,11 @@
 <script>
 import { Line } from 'vue-chartjs'
+import moment from 'moment'
 export default {
   name: 'SampleChart',
   extends: Line,
   props: {
-    data: {
+    value: {
       type: Array,
       required: true,
       default: null
@@ -18,7 +19,6 @@ export default {
         scales: {
           xAxes: [
             {
-              type: 'realtime',
               time: {
                 unit: 'second',
                 unitStepSize: 5
@@ -31,15 +31,24 @@ export default {
     }
   },
   computed: {
-    dataset: {
+    labels: {
       get () {
-        return this.data
-      },
-      set () {}
+        const ment = moment()
+        const labels = []
+        for (let i = 0; i < 5; i++) {
+          labels.push(ment.add(i, 's').format('h:mm:ss a'))
+        }
+        return labels
+      }
     }
   },
   mounted () {
-    this.renderChart(this.dataset, this.options)
+    this.renderChart({ labels: this.labels, datasets: this.value }, this.options)
+  },
+  methods: {
+    test () {
+      console.log('ada')
+    }
   }
 }
 </script>
