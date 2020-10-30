@@ -32,9 +32,10 @@ export default {
   },
   computed: {
     dataset: {
-      function () {
-        
-      }
+      get () {
+        return this.data
+      },
+      set () {}
     }
   },
   mounted () {
