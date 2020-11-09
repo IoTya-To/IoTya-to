@@ -41,7 +41,7 @@
                   </v-btn>
                 </v-form>
               </v-col>
-              <v-col>
+              <v-col cols="6">
                 <v-layout align-center justify-center>
                   <sample-chart :key="key" v-model="Chart.datasets" />
                 </v-layout>
@@ -68,7 +68,7 @@ export default {
       teeest: 'aaa',
       key: 0,
       date: null,
-      dialog: true,
+      dialog: false,
       Chart: {
         chartTitle: '',
         id: '',

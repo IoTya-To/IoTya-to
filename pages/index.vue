@@ -17,10 +17,7 @@
         <v-btn @click="refresh">
           re
         </v-btn>
-        <v-spacer/>
-        <v-btn>
-          addChart
-        </v-btn>
+        <v-spacer />
       </v-row>
       <v-overlay
         :absolute="true"
@@ -64,7 +61,7 @@
           :md="getmd(charts)"
           :lg="getmd(charts)"
         >
-          <ChartCard v-model="charts[n]" :draggable="editMode" />
+          <ChartCard v-model="charts[n]" :draggable="editMode" @delete="deleteData" />
         </v-col>
         <v-col
           xs="12"
@@ -107,7 +104,7 @@ export default {
       alertColor: alertColor.success,
       loginOverlay: false,
       tab: null,
-      charts: '',
+      charts: [],
       editMode: false,
       addcard: 0
     }
@@ -189,6 +186,10 @@ export default {
           })
         })
       })
+    },
+    deleteData (value) {
+      console.log(this.charts)
+      this.charts = this.charts.filter(v => v !== value)
     },
     addChart (Chart) {
       this.addcard++

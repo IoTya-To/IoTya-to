@@ -36,6 +36,14 @@
                     Setting
                   </v-list-item-action-text>
                 </v-list-item>
+                <v-list-item @click="deleteData">
+                  <v-list-item-action-text>
+                    <v-icon>
+                      mdi-delete
+                    </v-icon>
+                    Delete
+                  </v-list-item-action-text>
+                </v-list-item>
               </v-list>
             </v-menu>
           </v-layout>
@@ -155,6 +163,9 @@ export default {
           y: Math.random()
         })
       })
+    },
+    deleteData () {
+      this.$emit('delete', this.value)
     }
   }
 }
