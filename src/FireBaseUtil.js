@@ -32,6 +32,7 @@ export default class {
   setUserData (path, data) {
     this.database().ref(path).set(data, (error) => {
       if (error) {
+        console.log(error)
         return error
       } else {
         return true

@@ -4,7 +4,9 @@
       <v-snackbar v-model="alert" :color="alertColor">
         {{ alertText }}
       </v-snackbar>
+      <v-spacer />
       <v-row>
+        <v-spacer />
         <v-btn @click="loginOverlay=true">
           Login/Register {{ user ? user.email : 'null' }}
         </v-btn>
@@ -17,7 +19,9 @@
         <v-btn @click="refresh">
           re
         </v-btn>
-        <v-spacer />
+        <v-btn @click="uploadCharts">
+          save
+        </v-btn>
       </v-row>
       <v-overlay
         :absolute="true"
@@ -88,12 +92,19 @@ import config from '../src/firebaseConfig'
 import alertColor from '../src/AlertColor'
 import FireBaseUtil from '../src/FireBaseUtil'
 import addChartForm from '@/components/addChartForm'
+
 const fUtil = new FireBaseUtil(firebase)
 
 require('firebase/database')
 
 export default {
-  components: { LoginForm, ChartCard, RegisterForm, Draggable, addChartForm },
+  components: {
+    LoginForm,
+    ChartCard,
+    RegisterForm,
+    Draggable,
+    addChartForm
+  },
   data () {
     return {
       user: null,
@@ -155,7 +166,10 @@ export default {
       this.refresh()
     },
     LoginSuccessful () {
-      this.showAlert({ message: 'LoginSuccessful', color: alertColor.success })
+      this.showAlert({
+        message: 'LoginSuccessful',
+        color: alertColor.success
+      })
       this.loginOverlay = false
       this.refresh()
     },
@@ -204,6 +218,9 @@ export default {
         chartTitle: data.chartTitle,
         datasets: data.datasets
       })
+    },
+    uploadCharts () {
+      fUtil.setUserData('/UserData/' + this.user.uid, this.charts)
     },
     findChart (chartid) {
       return this.charts.find(chart => chart.id === chartid)
