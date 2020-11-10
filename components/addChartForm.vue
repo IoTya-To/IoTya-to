@@ -25,17 +25,17 @@
                     <v-text-field v-model="Chart.id" label="ChartID" :rules="rules.ChartIDRule" />
                   </v-col>
                   <v-col v-for="(_,n) in Chart.datasets" :key="n">
-                    <v-divider/>
+                    <v-divider />
                     <v-row>
-                      <v-spacer/>
-                      <v-btn class="ma-3">
+                      <v-spacer />
+                      <v-btn class="ma-3" @click="deleteParam(n)">
                         <v-icon>
                           mdi-close
                         </v-icon>
                       </v-btn>
                     </v-row>
                     <chart-setting v-model="Chart.datasets[n]" />
-                    <v-divider/>
+                    <v-divider />
                   </v-col>
                   <v-col>
                     <v-layout justify-center>
@@ -117,6 +117,10 @@ export default {
         return
       }
       this.$emit('input', this.Chart)
+    },
+    deleteParam (n) {
+      this.Chart.datasets = this.Chart.datasets.filter((_, index) => index !== n)
+      this.refresh()
     }
   }
 }
