@@ -159,6 +159,7 @@ export default {
       const userData = await fUtil.getUserData('/UserData/' + this.user.uid)
       const settings = userData.settings
       this.$vuetify.theme.dark = settings.darkTheme
+      console.log(userData.charts)
       this.charts = userData.charts
     },
     logout () {
@@ -220,7 +221,12 @@ export default {
       })
     },
     uploadCharts () {
-      fUtil.setUserData('/UserData/' + this.user.uid, this.charts)
+      const uploadData = []
+      Object.assign(uploadData, this.charts) // 完全にコピーしたい
+      console.log(Object.keys(this.charts[0])) // ["chartTitle", "datasets", "id"]
+      console.log(Object.keys(this.charts[0].datasets[0])) // ["backgroundColor", "borderColor", "fill", "label", "_meta", "data"] need  ["backgroundColor", "borderColor", "fill", "label" ]
+      // console.log(this.charts)
+      // fUtil.setUserData('/UserData/' + this.user.uid + '/charts/', this.charts)
     },
     findChart (chartid) {
       return this.charts.find(chart => chart.id === chartid)
