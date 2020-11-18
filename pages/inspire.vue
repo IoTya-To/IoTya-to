@@ -35,13 +35,13 @@ export default {
       chart: {
         datasets: [
           {
-            label: 'Dataset 1',
+            label: 'ChartOptions 1',
             fill: false,
             borderColor: '#FFFF84',
             backgroundColor: '#FFFF84'
           },
           {
-            label: 'Dataset 2',
+            label: 'ChartOptions 2',
             fill: false,
             borderColor: '#AADDFF',
             backgroundColor: '#AADD FF'

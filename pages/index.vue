@@ -91,6 +91,8 @@ import RegisterForm from '../components/RegisterForm'
 import config from '../src/firebaseConfig'
 import alertColor from '../src/AlertColor'
 import FireBaseUtil from '../src/FireBaseUtil'
+import { Dataset } from '../src/Dataset'
+import { ChartOptions } from '../src/ChartOptions'
 import addChartForm from '@/components/addChartForm'
 
 const fUtil = new FireBaseUtil(firebase)
@@ -159,7 +161,6 @@ export default {
       const userData = await fUtil.getUserData('/UserData/' + this.user.uid)
       const settings = userData.settings
       this.$vuetify.theme.dark = settings.darkTheme
-      console.log(userData.charts)
       this.charts = userData.charts
     },
     logout () {
@@ -222,10 +223,15 @@ export default {
     },
     uploadCharts () {
       const uploadData = []
-      Object.assign(uploadData, this.charts) // 完全にコピーしたい
-      console.log(Object.keys(this.charts[0])) // ["chartTitle", "datasets", "id"]
-      console.log(Object.keys(this.charts[0].datasets[0])) // ["backgroundColor", "borderColor", "fill", "label", "_meta", "data"] need  ["backgroundColor", "borderColor", "fill", "label" ]
-      // console.log(this.charts)
+      for (const chart of this.charts) {
+        const uploadDatasets = []
+        for (const dataset of chart.datasets) {
+          uploadDatasets.push(new Dataset(dataset.backgroundColor, dataset.borderColor, dataset.fill, dataset.label))
+        }
+        uploadData.push(new ChartOptions(chart.chartTitle, uploadDatasets, chart.id))
+      }
+      console.log('ada')
+      console.log(uploadData) // console.log(this.charts)
       // fUtil.setUserData('/UserData/' + this.user.uid + '/charts/', this.charts)
     },
     findChart (chartid) {
