@@ -230,9 +230,8 @@ export default {
         }
         uploadData.push(new ChartOptions(chart.chartTitle, uploadDatasets, chart.id))
       }
-      console.log('ada')
       console.log(uploadData) // console.log(this.charts)
-      // fUtil.setUserData('/UserData/' + this.user.uid + '/charts/', this.charts)
+      fUtil.setUserData('/UserData/' + this.user.uid + '/charts/', uploadData)
     },
     findChart (chartid) {
       return this.charts.find(chart => chart.id === chartid)
