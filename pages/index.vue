@@ -13,7 +13,7 @@
         <v-btn @click="logout">
           logout
         </v-btn>
-        <v-switch v-model="editMode">
+        <v-switch v-model="editMode" @change="cardKey++">
           test
         </v-switch>
         <v-btn @click="refresh">
@@ -21,6 +21,9 @@
         </v-btn>
         <v-btn @click="uploadCharts">
           save
+        </v-btn>
+        <v-btn @click="cardKey+=1">
+          key
         </v-btn>
       </v-row>
       <v-overlay
@@ -56,7 +59,7 @@
           </v-btn>
         </v-layout>
       </v-overlay>
-      <Draggable class="row" :disabled="!editMode" :animation="200">
+      <Draggable v-model="charts" class="row" :disabled="!editMode" :animation="200">
         <v-col
           v-for="(_,n) in charts"
           :key="n"
@@ -65,7 +68,7 @@
           :md="getmd(charts)"
           :lg="getmd(charts)"
         >
-          <ChartCard v-model="charts[n]" :draggable="editMode" @delete="deleteData" />
+          <ChartCard :key="cardKey" v-model="charts[n]" :draggable="editMode" @delete="deleteData" />
         </v-col>
         <v-col
           xs="12"
@@ -109,6 +112,7 @@ export default {
   },
   data () {
     return {
+      cardKey: 0,
       user: null,
       serverAddress: 'https://localhost:8080',
       baseGridSize: 4,
