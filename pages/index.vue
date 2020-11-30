@@ -112,6 +112,7 @@ export default {
   },
   data () {
     return {
+      socket: {},
       cardKey: 0,
       user: null,
       serverAddress: 'https://localhost:8080',
@@ -130,7 +131,7 @@ export default {
   },
   mounted () {
     this.firebaseInitialize()
-    const socket = io('http://localhost:8080', {
+    this.socket = io('http://localhost:8080', {
       reconnection: true,
       reconnectionAttempts: 10,
       reconnectionDelay: 1000,
@@ -138,13 +139,18 @@ export default {
       randomizationFactor: 0.5
     })
 
-    socket.on('connect', () => {
-      console.log(`socket.connected: ${socket.connected}`)
-      socket.on('ServerMessage', (message) => {
+    this.socket.on('connect', () => {
+      console.log(`socketId:${this.socket.id}`)
+      console.log(`socket.connected: ${this.socket.connected}`)
+      this.socket.on('ServerMessage', (message) => {
         console.log(message)
         this.addData(message)
       })
     })
+  },
+  destroyed () {
+    this.socket.disconnect()
+    console.log('destloyed')
   },
   methods: {
     async firebaseInitialize () {
