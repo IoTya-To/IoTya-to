@@ -10,9 +10,6 @@
         AddChart
       </v-card-title>
       <v-card-text>
-        <v-btn @click="test">
-          あ
-        </v-btn>
         <v-container>
           <v-col>
             <v-row>

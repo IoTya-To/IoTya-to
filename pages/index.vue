@@ -8,7 +8,7 @@
       <v-row>
         <v-spacer />
         <v-btn @click="loginOverlay=true">
-          Login/Register {{ user ? user.email : 'null' }}
+          Login/Register
         </v-btn>
         <v-btn @click="logout">
           logout
@@ -124,7 +124,8 @@ export default {
       tab: null,
       charts: [],
       editMode: false,
-      addcard: 0
+      addcard: 0,
+      cardKey: 0
     }
   },
   created () {
