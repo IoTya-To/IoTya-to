@@ -16,7 +16,7 @@
     "@taeuk-gang/chartjs-plugin-streaming": "^1.8.1",
     "chart.js": "^2.9.3",
     "core-js": "2.6.11",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "firebase": "^7.21.0",
     "moment": "^2.29.1",
     "node-fetch": "2.6.1",
